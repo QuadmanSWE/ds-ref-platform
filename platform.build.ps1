@@ -68,5 +68,5 @@ task local_dns {
     code c:\windows\system32\drivers\etc\hosts
 }
 task init cert_up, local_dns
-task up cluster_up, apps_up, backstage_up
+task up cluster_up, apps_up # , backstage_up
 task down cluster_down
