@@ -20,7 +20,7 @@ spec:
             done;
 
             echo "$SVC_HOST:$SVC_PORT connection OK ✓"
-          image: docker.io/busybox:1.32
+          image: docker.io/busybox:1.36
           imagePullPolicy: IfNotPresent
           name: svcchecker
           env:
