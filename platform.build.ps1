@@ -13,10 +13,11 @@ task cert_up {
         openssl genrsa -out ./0_certs/root-ca/root-ca-key.pem 2048 | out-null
         # create a self-signed root CA certificate using the private key
         openssl req -x509 -new -nodes -key ./0_certs/root-ca/root-ca-key.pem -days 3650 -sha256 -out ./0_certs/root-ca/root-ca.pem -subj "/CN=kube-ca" | out-null
+        # Copy the cert over to argocd app so that its kustomize can reference it for oidc
+        mkdir ./2_platform/argocd/secrets
+        cp 0_certs/root-ca/root-ca.pem ./2_platform/argocd/secrets/root-ca.pem
         # import the root CA certificate into the local machine's trusted root certificate store
         Import-Certificate -FilePath "./0_certs/root-ca/root-ca.pem" -CertStoreLocation cert:\CurrentUser\Root
-        # Copy the cert over to argocd app so that its kustomize can reference it for oidc
-        cp 0_certs/root-ca/root-ca.pem ./2_platform/argocd/secrets/root-ca.pem
     }
 }
 
@@ -36,6 +37,12 @@ task platform_down {
     tilt down 
     pop-location
 }
+task backstage_up {
+    
+}
+task backstage_down {
+    
+}
 task apps_up {
     push-location 3_gitops
     tilt up 
@@ -46,17 +53,6 @@ task apps_down {
     tilt down 
     pop-location
 }
-task backstage_up {
-    push-location backstage
-    tilt up
-    pop-location
-}
-task backstage_down {
-    push-location backstage
-    tilt down
-    pop-location
-}
-
 task local_dns {
     write-host "copy and paste into your host files (need to save as admin)"
 @"
@@ -72,5 +68,5 @@ task local_dns {
     code c:\windows\system32\drivers\etc\hosts
 }
 task init cert_up, local_dns
-task up cluster_up, backstage_up
+task up cluster_up, apps_up, backstage_up
 task down cluster_down
