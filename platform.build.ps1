@@ -69,7 +69,7 @@ task local_dns {
     code c:\windows\system32\drivers\etc\hosts
 }
 task bootstrap {
-    $kcadminpatchpatterh = @"
+    $kcadminpatchpattern = @"
 - op: add
   path: /data/KEYCLOAK_ADMIN
   value: {0}
@@ -77,10 +77,20 @@ task bootstrap {
   path: /data/KEYCLOAK_ADMIN_PASSWORD
   value: {1}
 "@
+    $kcauthpatchpattern = @"
+- op: add
+  path: /spec/template/spec/containers/0/env
+  value:
+    - name: KEYCLOAK_ADMIN
+      value: {0}
+    - name: KEYCLOAK_ADMIN_PASSWORD
+      value: {1}
+"@
     # Pick a username and a default password to use for the platform.
     $username = Read-Host -Prompt "Enter a username for the platform"
     $password = Read-Host -Prompt "Enter a password for your platform user" -MaskInput
-    $kcadminpatchpatterh -f $username, $password > 2_platform/keycloak/keycloak-admin-patch.yaml
+    $kcadminpatchpattern -f $username, $password > 2_platform/keycloak/keycloak-admin-patch.yaml
+    $kcauthpatchpattern -f $username, $password > 2_platform/keycloak-auth-patch.yaml
 }
 task prereqs {
     $reqs = @(

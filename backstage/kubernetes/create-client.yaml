@@ -5,6 +5,7 @@ metadata:
   name: create-client-backstage
   annotations: 
     await: service
+    patch: keycloakcredentials
 spec:
   backoffLimit: 1
   template:

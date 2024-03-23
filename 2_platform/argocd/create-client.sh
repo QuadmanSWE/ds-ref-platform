@@ -1,6 +1,7 @@
-# uses curl to invoke the keycloak REST api
+# uses curl to invoke the keycloak REST api for ArgoCD
 # gets a token for the master realm
-mastertoken=$(curl -k -g -d "client_id=admin-cli" -d "username=ds" -d "password=UsrmxwawnVTgEjRqm3H0" -d "grant_type=password" -d "client_secret=" "http://keycloak.platform:80/realms/master/protocol/openid-connect/token" | sed 's/.*access_token":"//g' | sed 's/".*//g');
+echo "Logging on as $KEYCLOAK_ADMIN in keycloak to bootstrap ArgoCD client and group..."
+mastertoken=$(curl -k -g -d "client_id=admin-cli" -d "username=$KEYCLOAK_ADMIN" -d "password=$KEYCLOAK_ADMIN_PASSWORD" -d "grant_type=password" -d "client_secret=" "http://keycloak.platform:80/realms/master/protocol/openid-connect/token" | sed 's/.*access_token":"//g' | sed 's/".*//g');
 # echo $mastertoken;
 
 id="9d0a21a2-8a08-4202-b2cb-c590e23c90c2";
@@ -85,7 +86,7 @@ curl -X POST -k -g "$url/clients" \
 ';
 
 # creates a new group called argocd-admin and adds the user ds to it according to the documentation: https://www.keycloak.org/docs-api/23.0.1/rest-api/#GroupRepresentation
-daviduserid=$(curl -X GET -k -g "$url/users?userName=ds" -H "Authorization: Bearer $mastertoken" | jq -r '.[].id');
+daviduserid=$(curl -X GET -k -g "$url/users?userName=$KEYCLOAK_ADMIN" -H "Authorization: Bearer $mastertoken" | jq -r '.[].id');
 
 curl -X POST -k -g "$url/groups" \
 -H "Authorization: Bearer $mastertoken" \
