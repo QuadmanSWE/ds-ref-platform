@@ -62,11 +62,11 @@ task local_dns {
 127.0.0.1 argocd.$dnsname
 127.0.0.1 pg.$dnsname
 127.0.0.1 echo.$dnsname
-127.0.0.1 argocd.$dnsname
 ############################################
 "@ | write-host
     code c:\windows\system32\drivers\etc\hosts
 }
+task dns_local local_dns
 task init cert_up, local_dns
 task up cluster_up, apps_up # , backstage_up
 task down cluster_down
