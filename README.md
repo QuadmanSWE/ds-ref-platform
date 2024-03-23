@@ -118,7 +118,7 @@ Infrastructure can be deployed through kubernets since we have equiping it with 
 
 You can check out the app that managed keycloak resources here: https://argocd.platform.local/applications/argocd/crossplane-keycloak
 
-Read more here: crossplane.md
+[Read more about crossplane in this platform.](crossplane.md)
 
 
 ## Roadmap!
