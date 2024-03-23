@@ -69,3 +69,8 @@ helmCharts:
         enabled: true
         existingSecret: "oauth2-proxy-redis-secret"
         existingSecretPasswordKey: "redis-secret"
+- name: crossplane
+  namespace: crossplane-system
+  releaseName: crossplane
+  repo: https://charts.crossplane.io/stable
+  version: ~1.15.1

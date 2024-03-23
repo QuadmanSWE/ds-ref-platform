@@ -39,3 +39,10 @@ metadata:
   name: development
   labels:
     istio-injection: enabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: crossplane-system
+  labels:
+    istio-injection: disabled
