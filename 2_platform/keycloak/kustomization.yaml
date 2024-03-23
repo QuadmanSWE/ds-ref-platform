@@ -6,3 +6,9 @@ resources:
   - "./kc-svc.yaml"
   - "./kc-vs.yaml"
   - "./kc-cm.yaml"
+patches:
+- target:
+    version: v1
+    kind: ConfigMap
+    name: keycloak-cm
+  path: ./keycloak-admin-patch.yaml

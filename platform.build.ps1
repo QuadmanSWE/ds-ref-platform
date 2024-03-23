@@ -57,7 +57,7 @@ task apps_down {
 }
 task local_dns {
     write-host "copy and paste into your host files (need to save as admin)"
-@"
+    @"
 ############################################
 127.0.0.1 backstage.$dnsname
 127.0.0.1 kc.$dnsname
@@ -68,7 +68,21 @@ task local_dns {
 "@ | write-host
     code c:\windows\system32\drivers\etc\hosts
 }
+task bootstrap {
+    $kcadminpatchpatterh = @"
+- op: add
+  path: /data/KEYCLOAK_ADMIN
+  value: {0}
+- op: add
+  path: /data/KEYCLOAK_ADMIN_PASSWORD
+  value: {1}
+"@
+    # Pick a username and a default password to use for the platform.
+    $username = Read-Host -Prompt "Enter a username for the platform"
+    $password = Read-Host -Prompt "Enter a password for your platform user" -MaskInput
+    $kcadminpatchpatterh -f $username, $password > 2_platform/keycloak/keycloak-admin-patch.yaml
+}
 task dns_local local_dns
-task init cert_up, local_dns
+task init bootstrap, cert_up, local_dns
 task up cluster_up, apps_up # , backstage_up
 task down cluster_down
