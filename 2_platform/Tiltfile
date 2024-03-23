@@ -39,3 +39,5 @@ k8s_resource('argocd-application-controller', labels="argocd")
 k8s_resource('argocd-applicationset-controller', labels="argocd")
 k8s_resource('argocd-notifications-controller', labels="argocd")
 k8s_resource('create-client-argocd', labels="argocd")
+
+# crossplane
