@@ -19,16 +19,7 @@ Please send me a PR with the entire setup natively on linux.
 
 ## Right, but what is in it?
 
-### Kubernetes uses (so these are the actual prerequisites)
-
-- kind (kubernetes in docker)
-- ctlptl (cattle patrol?)
-- kustomize
-- helm
-
-To be able to deploy anything of the platform you need tilt. It is used as a way to sync the desired state of the platform to your cluster and be able to troubleshoot and also develop new apps without rebuilding images.
-
-### Platform contains
+The platform contains
 
 - istio (service mesh and routing, like if linkerd and traeffik had a baby)
 - keycloak (identity and access management, local users management, federation, brokerage)
@@ -38,19 +29,39 @@ To be able to deploy anything of the platform you need tilt. It is used as a way
 - crossplane (turn your cluster in-side-out, why just use the best api and distributed storage ever invented to manage containers? Let's kubernetes be the control plane of anything)
 - hello world app (...I'm not very good with frontend. It lets you experience developing on top of tilt with hot reload while in a kubernetes cluster)
 
+## Prerequisites
+
+### Part 0, powershell and cert creation
+
+- PowerShell
+- InvokeBuild
+- openssl
+
+### Part 1, kubernetes
+
+- kubectl
+- kind
+- ctlptl
+
+### Part 2, platform
+
+- kustomize
+- helm
+- tilt
+
 ## I don't need help setting up a local kubernetes cluster
 
 Awesome, skip that step and move on to the platform resources. Let me know how you did it.
 
-## I don't like that tool
+## I don't like tool_x
 
 Substitute your own! Share your experience.
 
 ## I don't need all of this
 
-Ignore it or comment it out of the respective kustomization file and tiltfile to skip deploying it.
+Ignore it or comment it out of the respective kustomization.yaml and tiltfile to skip deploying it.
 
-## Hey you are obviously missing tool_x
+## Hey you are obviously missing tool_y
 
 Yes, obviously. Nice catch, please send a PR that includes and explains it for everyone.
 
