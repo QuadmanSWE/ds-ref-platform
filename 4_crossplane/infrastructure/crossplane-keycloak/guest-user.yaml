@@ -1,0 +1,15 @@
+# This user has additional fields like email, first name, and last name.
+apiVersion: user.keycloak.crossplane.io/v1alpha1
+kind: User
+metadata:
+  name: guest-user
+spec:
+  forProvider:
+    realmIdRef: 
+      name: developers-realm
+    username: "guest"
+    email: "guest@dsoderlund.consulting"
+    firstName: "Guest"
+    lastName: "User"
+  providerConfigRef:
+    name: keycloak-config

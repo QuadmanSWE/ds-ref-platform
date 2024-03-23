@@ -55,6 +55,16 @@ task apps_down {
     tilt down 
     pop-location
 }
+task crossplane_up {
+    push-location 4_crossplane
+    tilt up
+    pop-location
+}
+task crossplane_down {
+    push-location 4_crossplane
+    tilt down
+    pop-location
+}
 task local_dns {
     write-host "copy and paste into your host files (need to save as admin)"
     @"
@@ -118,5 +128,5 @@ task prereqs {
 }
 task dns_local local_dns
 task init prereqs, bootstrap, cert_up, local_dns
-task up cluster_up, apps_up # , backstage_up
+task up cluster_up, crossplane_up
 task down cluster_down

@@ -1,0 +1,2 @@
+include('../3_gitops/Tiltfile')
+k8s_yaml('appsets/gitops-infra.yaml')
