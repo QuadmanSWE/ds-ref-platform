@@ -6,7 +6,7 @@ metadata:
 spec:
   forProvider:
     realmIdRef: 
-      name: "developer-realm"
+      name: developers-realm
     username: "guest"
     email: "guest@dsoderlund.consulting"
     firstName: "Guest"
