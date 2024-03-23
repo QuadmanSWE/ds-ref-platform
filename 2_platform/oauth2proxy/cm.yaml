@@ -26,7 +26,7 @@ data:
     ssl_insecure_skip_verify = true
     standard_logging = true
     code_challenge_method = "S256"
-    extra_jwt_issuers = "https://portal.platform.local/api/auth=backstage"
+    extra_jwt_issuers = "https://backstage.platform.local/api/auth=backstage"
 ---
 apiVersion: v1
 kind: ConfigMap

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: svcchecker
+  labels:
+    app: backstage
+data:
+  SVC_HOST: keycloak.platform
+  SVC_PORT: "80"
+  SVC_WAIT_INTERVAL: "20"

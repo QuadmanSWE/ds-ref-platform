@@ -1,2 +1,2 @@
-# shell scripts are lf in gitattributes
-.sh text eol=lf
+* text=auto
+*.sh text eol=lf

@@ -18,6 +18,8 @@ task cert_up {
         cp 0_certs/root-ca/root-ca.pem ./2_platform/argocd/secrets/root-ca.pem
         # import the root CA certificate into the local machine's trusted root certificate store
         Import-Certificate -FilePath "./0_certs/root-ca/root-ca.pem" -CertStoreLocation cert:\CurrentUser\Root
+        # Copy the cert over to argocd app so that its kustomize can reference it for oidc
+        cp 0_certs/root-ca/root-ca.pem ./2_platform/argocd/secrets/root-ca.pem
     }
 }
 

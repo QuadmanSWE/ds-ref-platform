@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: backstage
+spec:
+  gateways:
+  - platform/platform-gateway
+  hosts:
+  - backstage.platform.local
+  http:
+  - match:
+    - uri:
+        prefix: /api
+    route:
+    - destination:
+        host: backstage.backstage.svc.cluster.local
+        port:
+          number: 7007
+  - route:
+    - destination:
+        host: backstage.backstage.svc.cluster.local
+        port:
+          number: 3000

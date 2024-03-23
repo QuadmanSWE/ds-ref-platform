@@ -1,0 +1,55 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: backstage
+resources:
+  - "./deployment.yaml"
+  - "./service.yaml"
+  - "./redis-secret.yaml"
+  - "./create-client.yaml"
+  - "./virtual-service.yaml"
+configMapGenerator:
+  - name: backstage-config
+    files: 
+    - "./app-config.tilt.yaml"
+  - name: client-script
+    files:
+      - "./create-client.sh"
+secretGenerator:
+  - name: backstage-secret
+    type: Opaque
+    literals:
+      - POSTGRES_HOST=postgres.platform
+      - POSTGRES_PORT="5432"
+      - POSTGRES_USER=myadmin
+      - POSTGRES_PASSWORD=mypassword
+      - REDIS_CONNECTION=redis://default:backstage@backstage-redis-headless:6379
+      - KEYCLOAK_BASE_URL=https://kc.platform.local
+      - KEYCLOAK_CLIENT_ID=backstage
+      - KEYCLOAK_CLIENT_SECRET=oqoVVhGECYJRPkJ5OrixYJ3tki5nRg53
+      - BACKEND_SECRET=notused
+      - ARGOCD_AUTH_TOKEN=argocd.token=somevalue
+      # - CERTIFICATE=notused
+      # - CERTIFICATE_KEY=notused
+
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    note: kustomize-generated
+
+helmCharts:
+- name: redis
+  namespace: backstage
+  releaseName: backstage-redis
+  repo: https://charts.bitnami.com/bitnami
+  version: ~16.13.2
+  valuesInline:
+    auth:
+      enabled: true
+      existingSecret: backstage-redis-secret
+      existingSecretPasswordKey: redis-secret
+    architecture: "standalone"
+    master:
+      service:
+        port: 6379
+    replica:
+      replicaCount: 1
