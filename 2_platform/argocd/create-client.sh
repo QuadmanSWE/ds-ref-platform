@@ -85,8 +85,8 @@ curl -X POST -k -g "$url/clients" \
 }
 ';
 
-# creates a new group called argocd-admin and adds the user ds to it according to the documentation: https://www.keycloak.org/docs-api/23.0.1/rest-api/#GroupRepresentation
-daviduserid=$(curl -X GET -k -g "$url/users?userName=$KEYCLOAK_ADMIN" -H "Authorization: Bearer $mastertoken" | jq -r '.[].id');
+# creates a new group called argocd-admin and adds the user $KEYCLOAK_ADMIN to it according to the documentation: https://www.keycloak.org/docs-api/23.0.1/rest-api/#GroupRepresentation
+kcadminuserid=$(curl -X GET -k -g "$url/users?userName=$KEYCLOAK_ADMIN" -H "Authorization: Bearer $mastertoken" | jq -r '.[].id');
 
 curl -X POST -k -g "$url/groups" \
 -H "Authorization: Bearer $mastertoken" \
@@ -99,5 +99,5 @@ curl -X POST -k -g "$url/groups" \
 
 groupid=$(curl -X GET -k -g "$url/groups" -H "Authorization: Bearer $mastertoken" | jq -r '.[] | select(.name == "argocd-admin") | .id');
 
-# adds the user ds to the group argocd-admin
-curl -X PUT -k -g "$url/users/$daviduserid/groups/$groupid" -H "Authorization: Bearer $mastertoken";
+# adds the user $KEYCLOAK_ADMIN to the group argocd-admin
+curl -X PUT -k -g "$url/users/$kcadminuserid/groups/$groupid" -H "Authorization: Bearer $mastertoken";

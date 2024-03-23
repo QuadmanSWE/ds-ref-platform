@@ -45,18 +45,16 @@ curl -X POST -k -g "http://keycloak.platform:80/admin/realms/master/clients" \
 }
 ';
 
-# updates user ds to be active with valid email
-daviduserid=$(curl -X GET -k -g "$url/users?userName=$KEYCLOAK_ADMIN" -H "Authorization: Bearer $mastertoken" | jq -r '.[].id')
-curl -X PUT -k -g "$url/users/$daviduserid" \
+# updates user $KEYCLOAK_ADMIN to be active with valid email
+kcadminuserid=$(curl -X GET -k -g "$url/users?userName=$KEYCLOAK_ADMIN" -H "Authorization: Bearer $mastertoken" | jq -r '.[].id')
+curl -X PUT -k -g "$url/users/$kcadminuserid" \
 -H "Authorization: Bearer $mastertoken" \
 -H "Content-Type: application/json" \
 --data-raw '
 {
-    "username":"ds",
+    "username":"'$KEYCLOAK_ADMIN'",
     "enabled":"true",
     "emailVerified":"true",
-    "firstName":"David",
-    "lastName":"Söderlund",
     "email":"'$KEYCLOAK_ADMIN_EMAIL'"
 }
 '
