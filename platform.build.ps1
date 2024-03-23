@@ -91,6 +91,10 @@ task bootstrap {
     # Pick a username and a default password to use for the platform.
     $username = Read-Host -Prompt "Enter a username for the platform"
     $password = Read-Host -Prompt "Enter a password for your platform user" -MaskInput
+    $stupidCharacters = '`''"$'
+    if($password -match "[$stupidCharacters]") {
+        throw "Password cannot contain any of the following characters: $stupidCharacters (because I couldn't get the curl command to escape them :D)"
+    }
     $email = Read-Host -Prompt "Enter an email for your platform user"
     $kcadminpatchpattern -f $username, $password > 2_platform/keycloak/keycloak-admin-patch.yaml
     $kcauthpatchpattern -f $username, $password, $email  > 2_platform/keycloak-auth-patch.yaml

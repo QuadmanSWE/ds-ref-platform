@@ -1,7 +1,7 @@
 # uses curl to invoke the keycloak REST api for oauth2proxy
 # gets a token for the master realm
 echo "Logging on as $KEYCLOAK_ADMIN in keycloak to bootstrap oauth2proxy client and roles"
-mastertoken=$(curl -k -g -d "client_id=admin-cli" -d "username=$KEYCLOAK_ADMIN" -d "password=$KEYCLOAK_ADMIN_PASSWORD" -d "grant_type=password" -d "client_secret=" "http://keycloak.platform:80/realms/master/protocol/openid-connect/token" | sed 's/.*access_token":"//g' | sed 's/".*//g');
+mastertoken=$(curl -k -g -d "client_id=admin-cli" -d "username="$KEYCLOAK_ADMIN -d "password="$KEYCLOAK_ADMIN_PASSWORD -d "grant_type=password" -d "client_secret=" "http://keycloak.platform:80/realms/master/protocol/openid-connect/token" | sed 's/.*access_token":"//g' | sed 's/".*//g');
 # echo $mastertoken;
 
 id="df9239c7-211d-4524-834a-2eedc3dca6af";

@@ -1,7 +1,7 @@
 # uses curl to invoke the keycloak REST api for ArgoCD
 # gets a token for the master realm
 echo "Logging on as $KEYCLOAK_ADMIN in keycloak to bootstrap ArgoCD client and group..."
-mastertoken=$(curl -k -g -d "client_id=admin-cli" -d "username=$KEYCLOAK_ADMIN" -d "password=$KEYCLOAK_ADMIN_PASSWORD" -d "grant_type=password" -d "client_secret=" "http://keycloak.platform:80/realms/master/protocol/openid-connect/token" | sed 's/.*access_token":"//g' | sed 's/".*//g');
+mastertoken=$(curl -k -g -d "client_id=admin-cli" -d "username="$KEYCLOAK_ADMIN -d "password="$KEYCLOAK_ADMIN_PASSWORD -d "grant_type=password" -d "client_secret=" "http://keycloak.platform:80/realms/master/protocol/openid-connect/token" | sed 's/.*access_token":"//g' | sed 's/".*//g');
 # echo $mastertoken;
 
 id="9d0a21a2-8a08-4202-b2cb-c590e23c90c2";
