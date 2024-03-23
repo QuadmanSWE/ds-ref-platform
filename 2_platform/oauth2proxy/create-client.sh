@@ -57,6 +57,6 @@ curl -X PUT -k -g "$url/users/$daviduserid" \
     "emailVerified":"true",
     "firstName":"David",
     "lastName":"Söderlund",
-    "email":"ds@dsoderlund.consulting"
+    "email":"'$KEYCLOAK_ADMIN_EMAIL'"
 }
 '
