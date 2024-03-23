@@ -43,3 +43,4 @@ k8s_resource('create-client-argocd', labels="argocd")
 # crossplane
 k8s_resource('crossplane', labels="crossplane")
 k8s_resource('crossplane-rbac-manager', labels="crossplane")
+k8s_resource('create-client-crossplane', labels="crossplane")

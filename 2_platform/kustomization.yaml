@@ -8,6 +8,7 @@ resources:
   - "./platform-gateway.yaml"
   - "./argocd"
   - "./coredns-cm.yaml"
+  - "./crossplane"
 patches:
   - path: "connection-checker.yaml"
     target:
