@@ -20,8 +20,8 @@ secretGenerator:
     literals:
       - POSTGRES_HOST=postgres.platform
       - POSTGRES_PORT="5432"
-      - POSTGRES_USER=myadmin
-      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_USER=pgadminuser
+      - POSTGRES_PASSWORD=pgpw_TP28zugpVyXxs3E4OMZd
       - REDIS_CONNECTION=redis://default:backstage@backstage-redis-headless:6379
       - KEYCLOAK_BASE_URL=https://kc.platform.local
       - KEYCLOAK_CLIENT_ID=backstage

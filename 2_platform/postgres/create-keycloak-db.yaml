@@ -13,11 +13,11 @@ spec:
         command: ["sh", "-c"]
         args: 
           - >
-            psql -h postgres.platform -p 5432 -U myadmin -c "CREATE USER keycloak WITH PASSWORD '$KEYCLOAK_PASSWORD';" -c "CREATE DATABASE keycloak OWNER keycloak;"
+            psql -h postgres.platform -p 5432 -U pgadminuser -c "CREATE USER keycloak WITH PASSWORD '$KEYCLOAK_PASSWORD';" -c "CREATE DATABASE keycloak OWNER keycloak;"
         env:
         - name: PGPASSWORD
-          value: mypassword
+          value: pgpw_TP28zugpVyXxs3E4OMZd
         - name: KEYCLOAK_PASSWORD
-          value: UsrmxwawnVTgEjRqm3H0
+          value: kcpw_tJLMDHwUqcfgO20TqQcO
       restartPolicy: Never
   backoffLimit: 1

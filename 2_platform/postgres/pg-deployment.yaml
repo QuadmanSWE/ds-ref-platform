@@ -17,9 +17,9 @@ spec:
         image: postgres:alpine
         env:
         - name: POSTGRES_PASSWORD
-          value: mypassword
+          value: pgpw_TP28zugpVyXxs3E4OMZd
         - name: POSTGRES_USER
-          value: myadmin
+          value: pgadminuser
         ports:
         - containerPort: 5432
         resources:
