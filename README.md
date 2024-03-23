@@ -57,7 +57,7 @@ Lastly it will prompt you to add the dns records to your hostfile in order for y
 
 When `up` runs it will create a 1 worker 1 control-plane cluster using kind on docker desktop according to the spec in `1_cluster/kind/cluster.yaml`.
 
-Then it will run the tiltfile `3_gitops\Tiltfile` to get the platform and then the gitops configuration up.
+Then it will run the tiltfile `4_crossplane_\Tiltfile` to get the platform and then the gitops configuration for apps and infrastructure up.
 
 ![](./docs/assets/2024-03-23-18-58-03.png)
 
@@ -79,7 +79,6 @@ Notice that you didn't log on but argocd still knows who you are and it knows to
 
 You can check out your user settings here: https://argocd.platform.local/user-info
 
-
 ## Right, but how did we go from "up" to this app running?
 
 The platform contains
@@ -89,7 +88,7 @@ The platform contains
 - oauth2proxy (can act as an api gateway, and lets us deploy apps in our platform that get single sign on and stuff for free)
 - postgres (got to run those databases somewhere, you can switch this out easily but its here to not leave any gaps)
 - argocd (gitops tool with a kick as ui, can sync desired state of any thing kubernetes native to one or more clusters)
-
+- crossplane (turn your cluster in-side-out, why just use the best api and distributed storage ever invented to manage containers? Let's kubernetes be the control plane of anything)
 
 ## I don't need help setting up a local kubernetes cluster
 
@@ -113,11 +112,19 @@ Apps will be deployed by default from the gitops-apps application set defined in
 By default this is the service echo which will help you debug the requests that are sent to service upstream from oauth2proxy.
 You can point this appset to deploy apps from some other repo/branch than this to get your apps or you can deploy something else entirely with `3_gitops\Tiltfile` which creates it.
 
+## And infrastructure as data?
+
+Infrastructure can be deployed through kubernets since we have equiping it with crossplane. You need to add the providers and their credentials as you need, but there is one out of the box for keycloak for you to play with.
+
+You can check out the app that managed keycloak resources here: https://argocd.platform.local/applications/argocd/crossplane-keycloak
+
+Read more here: crossplane.md
+
+
 ## Roadmap!
 
 I am looking forward to adding more tools to test out together.
 
-- crossplane (turn your cluster in-side-out, why just use the best api and distributed storage ever invented to manage containers? Let's kubernetes be the control plane of anything)
 - hello world app (...I'm not very good with frontend. It lets you experience developing on top of tilt with hot reload while in a kubernetes cluster)
 - kyverno (policies for who can do what and how things should behave)
 - kubevirt (for when your platform needs to support virtual machines)
