@@ -6,8 +6,8 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: ssh://ds@nas/volume1/homes/ds/git/ds-ref-platform.git
-        revision: HEAD
+        repoURL: https://github.com/QuadmanSWE/ds-ref-platform
+        revision: github
         directories:
           - path: 3_gitops/apps/*
   template:
@@ -19,8 +19,8 @@ spec:
     spec:
       project: default
       source:
-        repoURL: ssh://ds@nas/volume1/homes/ds/git/ds-ref-platform.git
-        targetRevision: HEAD
+        repoURL: https://github.com/QuadmanSWE/ds-ref-platform
+        targetRevision: github
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc

@@ -17,6 +17,11 @@ patches:
     target:
       kind: Job
       annotationSelector: "await=service"
+  - path: "keycloak-auth-patch.yaml"
+    target:
+      kind: Job
+      annotationSelector: "patch=keycloakcredentials"
+
 helmCharts:
 - name: base
   namespace: istio-system

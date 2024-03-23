@@ -3,6 +3,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: create-client-oauth2proxy
+  annotations: 
+    patch: keycloakcredentials
 spec:
   backoffLimit: 1
   template:

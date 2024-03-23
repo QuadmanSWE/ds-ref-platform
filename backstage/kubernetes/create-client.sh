@@ -1,6 +1,6 @@
 # uses curl to invoke the keycloak REST api
 # gets a token for the master realm
-mastertoken=$(curl -k -g -d "client_id=admin-cli" -d "username=ds" -d "password=UsrmxwawnVTgEjRqm3H0" -d "grant_type=password" -d "client_secret=" "http://keycloak.platform:80/realms/master/protocol/openid-connect/token" | sed 's/.*access_token":"//g' | sed 's/".*//g')
+mastertoken=$(curl -k -g -d "client_id=admin-cli" -d "username=$KEYCLOAK_ADMIN" -d "password=$KEYCLOAK_ADMIN_PASSWORD" -d "grant_type=password" -d "client_secret=" "http://keycloak.platform:80/realms/master/protocol/openid-connect/token" | sed 's/.*access_token":"//g' | sed 's/".*//g')
 
 id="e7276799-95ce-4352-b654-587ca0fa2dba"
 url="http://keycloak.platform:80/admin/realms/master"

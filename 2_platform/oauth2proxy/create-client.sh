@@ -1,6 +1,7 @@
-# uses curl to invoke the keycloak REST api
+# uses curl to invoke the keycloak REST api for oauth2proxy
 # gets a token for the master realm
-mastertoken=$(curl -k -g -d "client_id=admin-cli" -d "username=ds" -d "password=UsrmxwawnVTgEjRqm3H0" -d "grant_type=password" -d "client_secret=" "http://keycloak.platform:80/realms/master/protocol/openid-connect/token" | sed 's/.*access_token":"//g' | sed 's/".*//g');
+echo "Logging on as $KEYCLOAK_ADMIN in keycloak to bootstrap oauth2proxy client and roles"
+mastertoken=$(curl -k -g -d "client_id=admin-cli" -d "username="$KEYCLOAK_ADMIN -d "password="$KEYCLOAK_ADMIN_PASSWORD -d "grant_type=password" -d "client_secret=" "http://keycloak.platform:80/realms/master/protocol/openid-connect/token" | sed 's/.*access_token":"//g' | sed 's/".*//g');
 # echo $mastertoken;
 
 id="df9239c7-211d-4524-834a-2eedc3dca6af";
@@ -44,18 +45,16 @@ curl -X POST -k -g "http://keycloak.platform:80/admin/realms/master/clients" \
 }
 ';
 
-# updates user ds to be active with valid email
-daviduserid=$(curl -X GET -k -g "$url/users?userName=ds" -H "Authorization: Bearer $mastertoken" | jq -r '.[].id')
-curl -X PUT -k -g "$url/users/$daviduserid" \
+# updates user $KEYCLOAK_ADMIN to be active with valid email
+kcadminuserid=$(curl -X GET -k -g "$url/users?userName=$KEYCLOAK_ADMIN" -H "Authorization: Bearer $mastertoken" | jq -r '.[].id')
+curl -X PUT -k -g "$url/users/$kcadminuserid" \
 -H "Authorization: Bearer $mastertoken" \
 -H "Content-Type: application/json" \
 --data-raw '
 {
-    "username":"ds",
+    "username":"'$KEYCLOAK_ADMIN'",
     "enabled":"true",
     "emailVerified":"true",
-    "firstName":"David",
-    "lastName":"Söderlund",
-    "email":"ds@dsoderlund.consulting"
+    "email":"'$KEYCLOAK_ADMIN_EMAIL'"
 }
 '
