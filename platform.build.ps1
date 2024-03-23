@@ -1,5 +1,5 @@
 param (
-    $dnsname = "platform.local"
+    $dnsname = "platform.local" #todo: this can be changed here but it won't work with any value but the default since its hardcoded everywhere.
 )
 
 task cert_up {
@@ -82,7 +82,24 @@ task bootstrap {
     $password = Read-Host -Prompt "Enter a password for your platform user" -MaskInput
     $kcadminpatchpatterh -f $username, $password > 2_platform/keycloak/keycloak-admin-patch.yaml
 }
+task prereqs {
+    $reqs = @(
+        "kubectl",
+        "kind",
+        "tilt",
+        "ctlptl",
+        "openssl",
+        "helm",
+        "kustomize"
+    )
+    foreach ($req in $reqs) {
+        if (-not (Get-Command $req -ErrorAction SilentlyContinue)) {
+            throw "$req is required but not found"
+        }
+        Write-Host "$req found"
+    }
+}
 task dns_local local_dns
-task init bootstrap, cert_up, local_dns
+task init prereqs, bootstrap, cert_up, local_dns
 task up cluster_up, apps_up # , backstage_up
 task down cluster_down
