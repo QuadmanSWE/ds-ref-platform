@@ -8,8 +8,7 @@ secretGenerator:
   - name: keycloak-credentials
     type: Opaque
     literals:
-      - credentials={"client_id":"crossplane","client_secret":"xppw_LnaEt79B47CxPEafJpXx","url":"http://kc.platform.local","realm":"master","base_Path":"/","tls_insecure_skip_verify":"true"} 
-      # ,"root_ca_certificate":""
+      - credentials={"client_id":"crossplane","client_secret":"xppw_LnaEt79B47CxPEafJpXx","url":"http://kc.platform.local","realm":"master","base_Path":"/","tls_insecure_skip_verify":"true","root_ca_certificate":""} 
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
