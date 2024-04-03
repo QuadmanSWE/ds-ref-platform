@@ -1,3 +1,5 @@
+cd .\telepresence-demo\
+npm install
 
 docker build -t tdemo:blue .
 kind load docker-image tdemo:blue --name ds-ref-cluster
