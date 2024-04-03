@@ -2,8 +2,6 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: hello
-  annotations:
-    link.argocd.argoproj.io/external-link: https://hello.platform.local
 spec:
   hosts:
   - hello.platform.local
@@ -13,8 +11,30 @@ spec:
   - match:
     - uri:
         prefix: /
-    route:
-    - destination:
-        host: hello.development.svc.cluster.local
-        port:
-          number: 80
+    delegate:
+      name: hello-route    
+    rewrite:
+      authority: hello.platform.local
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: hello-route
+spec:
+  http:
+    - name: "hello-dev"
+      match:
+        - headers:
+            dev:
+              exact: "true"
+      route:
+        - destination:
+            host: hello-dev.dsd.svc.cluster.local
+            port:
+              number: 80
+    - name : "hello"
+      route:
+        - destination:
+            host: hello.dsd.svc.cluster.local
+            port:
+              number: 80

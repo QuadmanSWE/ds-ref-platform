@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello
+  name: hello-dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello
+      app: hello-dev
   template:
     metadata:
       labels:
-        app: hello
+        app: hello-dev
         demo: second-demo
     spec:
       containers:
-      - image: tdemo:blue
+      - image: tdemo:green
         imagePullPolicy: IfNotPresent
-        name: hello
+        name: hello-dev
         ports:
         - containerPort: 3000
         env:
