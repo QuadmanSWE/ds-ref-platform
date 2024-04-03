@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloserver
+  template:
+    metadata:
+      labels:
+        app: helloserver
+        demo: second-demo
+    spec:
+      containers:
+      - image: tdemo:latest
+        imagePullPolicy: IfNotPresent
+        name: helloserver
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PORT
+          value: "3000"      
+        resources:
+          limits:
+            cpu: "0.2"
+            memory: "64Mi"
+          requests:
+            cpu: "0.1"
+            memory: "32Mi"

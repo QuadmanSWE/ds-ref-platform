@@ -128,5 +128,5 @@ task prereqs {
 }
 task dns_local local_dns
 task init prereqs, bootstrap, cert_up, local_dns
-task up cluster_up, crossplane_up
+task up cluster_up, platform_up
 task down cluster_down
