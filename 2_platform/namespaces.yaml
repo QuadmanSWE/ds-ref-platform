@@ -40,7 +40,7 @@ metadata:
   name: development
   labels:
     istio-injection: enabled
-    stakater-reloader: disabled
+    stakater-reloader: enabled
 ---
 apiVersion: v1
 kind: Namespace

@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: echoserver
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   replicas: 1
   selector:
@@ -12,8 +14,6 @@ spec:
       labels:
         app: echoserver
         demo: first-demo
-      annotations:
-        reloader.stakater.com/auto: "true"
     spec:
       containers:
         - image: ealen/echo-server:latest
