@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: echoserver
   annotations:
-    reloader.stakater.com/auto: "true"
+    reloader.stakater.com/auto: "njet"
 spec:
   replicas: 1
   selector:
