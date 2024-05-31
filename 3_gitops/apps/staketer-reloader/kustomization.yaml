@@ -8,4 +8,4 @@ helmCharts:
     version: 1.0.101
     valuesInline:
       reloader:
-        namespaceSelector: "development,platform"
+        namespaceSelector: "stakater-reloader=enabled"
