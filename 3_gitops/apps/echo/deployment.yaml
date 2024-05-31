@@ -14,18 +14,22 @@ spec:
         demo: first-demo
     spec:
       containers:
-      - image: ealen/echo-server:latest
-        imagePullPolicy: IfNotPresent
-        name: echoserver
-        ports:
-        - containerPort: 80
-        env:
-        - name: PORT
-          value: "80"      
-        resources:
-          limits:
-            cpu: "0.2"
-            memory: "64Mi"
-          requests:
-            cpu: "0.1"
-            memory: "32Mi"
+        - image: ealen/echo-server:latest
+          imagePullPolicy: IfNotPresent
+          name: echoserver
+          ports:
+            - containerPort: 80
+          env:
+            - name: PORT
+              value: "80"
+          envFrom:
+            - configMapRef:
+                name: echoserver-config
+                optional: true
+          resources:
+            limits:
+              cpu: "0.2"
+              memory: "64Mi"
+            requests:
+              cpu: "0.1"
+              memory: "32Mi"
