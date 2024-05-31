@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: echoserver-config
 data:
-  exampleData: "5 value"
+  exampleData: "6 value"
