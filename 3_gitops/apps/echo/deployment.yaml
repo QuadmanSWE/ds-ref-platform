@@ -12,6 +12,8 @@ spec:
       labels:
         app: echoserver
         demo: first-demo
+      annotations:
+        reloader.stakater.com/auto: "true"
     spec:
       containers:
         - image: ealen/echo-server:latest
