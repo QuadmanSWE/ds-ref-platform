@@ -3,10 +3,9 @@ kind: Kustomization
 helmCharts:
   - name: reloader
     releaseName: reloader
+    namespace: development
     repo: https://stakater.github.io/stakater-charts
     version: 1.0.101
     valuesInline:
       reloader:
-        namespaceSelector:
-          matchLabels:
-            stakater-reloader: enabled
+        namespaceSelector: "development,platform"
