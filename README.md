@@ -6,6 +6,8 @@ The goal of this repo is to showcase free and open source software that plays ni
 
 ## Setup
 
+Given that you have all of the prerequsite binaries, you can set everything up like so.
+
 ``` PowerShell
 Invoke-Build init
 Invoke-Build up
@@ -22,7 +24,7 @@ Invoke-Build up
 ### Part 1, kubernetes
 
 - kubectl
-- kind
+- kind or minikube
 - ctlptl
 
 ### Part 2, platform

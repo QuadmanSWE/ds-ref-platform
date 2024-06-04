@@ -24,10 +24,18 @@ task cert_up {
 }
 
 task cluster_up {
-    ctlptl apply -f 1_cluster/kind/cluster.yaml
+    $choice = Get-Content .\architecture.txt
+    switch ($choice) {
+        "minikube" { minikube start --memory 8192 --cpus 4 --nodes 2 --driver=docker }
+        "kind" { ctlptl apply -f 1_cluster/kind/cluster.yaml }
+    }
 }
 task cluster_down {
-    ctlptl delete -f 1_cluster/kind/cluster.yaml
+    $choice = Get-Content .\architecture.txt
+    switch ($choice) {
+        "minikube" {  minikube delete }
+        "kind" { ctlptl delete -f 1_cluster/kind/cluster.yaml }
+    }
 }
 task platform_up {
     push-location 2_platform
@@ -110,9 +118,11 @@ task bootstrap {
     $kcauthpatchpattern -f $username, $password, $email  > 2_platform/keycloak-auth-patch.yaml
 }
 task prereqs {
+    $choice = Get-Content .\architecture.txt
     $reqs = @(
+        "docker",
         "kubectl",
-        "kind",
+        $choice,
         "tilt",
         "ctlptl",
         "openssl",
@@ -126,7 +136,11 @@ task prereqs {
         Write-Host "$req found"
     }
 }
+task choice {
+    $choice = @( "kind", "minikube" ) | Out-GridView -OutputMode Single -Title "Choose a cluster provider"
+    $choice > .\architecture.txt
+}
 task dns_local local_dns
-task init prereqs, bootstrap, cert_up, local_dns
+task init choice, prereqs, bootstrap, cert_up, local_dns
 task up cluster_up, crossplane_up
 task down cluster_down
