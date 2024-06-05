@@ -22,32 +22,76 @@ generatorOptions:
   annotations:
     note: kustomize-generated
 helmCharts:
-- name: argo-cd
-  releaseName: argocd
-  repo: https://argoproj.github.io/argo-helm
-  version: 5.52.0
-  valuesInline:
-    configs:
-      cm:
-        url: https://argocd.platform.local
-        admin.enabled: "false"
-        oidc.config: |
-          name: keycloak
-          issuer: https://kc.platform.local/realms/master
-          clientID: argocd
-          clientSecret: $oidc.keycloak.clientSecret
-          requestedScopes: ["openid", "profile", "email", "groups"]
-          rootCA: $oidc.keycloak.rootCA
-        kustomize.buildOptions: --enable-helm
-        application.resourceTrackingMethod: annotation
-      rbac:
-        policy.csv: |
-          g, argocd-admin, role:admin
-          g, argocd-viewer, role:readonly
-      params:
-        server.insecure: true
-      secret:
-        createSecret: false
-    dex:
-      enabled: false
-    
+  - name: argo-cd
+    releaseName: argocd
+    repo: https://argoproj.github.io/argo-helm
+    version: 5.52.0
+    valuesInline:
+      configs:
+        cm:
+          url: https://argocd.platform.local
+          admin.enabled: "false"
+          oidc.config: |
+            name: keycloak
+            issuer: https://kc.platform.local/realms/master
+            clientID: argocd
+            clientSecret: $oidc.keycloak.clientSecret
+            requestedScopes: ["openid", "profile", "email", "groups"]
+            rootCA: $oidc.keycloak.rootCA
+          kustomize.buildOptions: --enable-helm
+          application.resourceTrackingMethod: annotation
+        rbac:
+          policy.csv: |
+            g, argocd-admin, role:admin
+            g, argocd-viewer, role:readonly
+        params:
+          server.insecure: true
+        secret:
+          createSecret: false
+        cmp:
+          create: true
+          plugins:
+            cdk8s-typescript:
+              init:
+                command: ["sh", "-c"]
+                args:
+                  - >
+                    echo "init cdk8s-typescript" &&
+                    npm install
+              generate:
+                command: ["sh", "-c"]
+                args:
+                  - >
+                    cdk8s synth > /dev/null &&
+                    cat dist/*
+              discover:
+                fileName: "./imports/k8s.ts"
+      repoServer:
+        extraContainers:
+          - name: cdk8s-typescript
+            command:
+              - "/var/run/argocd/argocd-cmp-server"
+            image: docker.io/dsoderlund/cdk8s:typescript
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 999
+            volumeMounts:
+              - mountPath: /tmp
+                name: cmp-tmp
+              - mountPath: /var/run/argocd
+                name: var-files
+              - mountPath: /home/argocd/cmp-server/plugins
+                name: plugins
+              - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+                name: argocd-cmp-cm
+                subPath: cdk8s-typescript.yaml
+        volumes:
+          - name: argocd-cmp-cm
+            configMap:
+              name: argocd-cmp-cm
+          - name: cmp-tmp
+            emptyDir: {}
+      dex:
+        enabled: false
+# patches:
+#   - path: cdk8s-plugin-sidecar.yaml
