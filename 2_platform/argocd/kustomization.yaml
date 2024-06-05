@@ -52,10 +52,17 @@ helmCharts:
           create: true
           plugins:
             cdk8s-typescript:
+              init:
+                command: ["sh", "-c"]
+                args: 
+                - >
+                  echo "init cdk8s-typescript" &&
+                  npm install
               generate:
-                command: ["synth"]
+                command: [sh, -c, "cdk8s synth > /dev/null && cat dist/*"]
               discover:
                 fileName: "./imports/k8s.ts"
+              preserveFileMode: true
       repoServer:
         extraContainers:
           - name: cdk8s-typescript
@@ -68,6 +75,7 @@ helmCharts:
             volumeMounts:
               - mountPath: /tmp
                 name: cmp-tmp
+
               - mountPath: /var/run/argocd
                 name: var-files
               - mountPath: /home/argocd/cmp-server/plugins
@@ -81,7 +89,7 @@ helmCharts:
               name: argocd-cmp-cm
           - name: cmp-tmp
             emptyDir: {}
-            dex:
-              enabled: false
+      dex:
+        enabled: false
 # patches:
 #   - path: cdk8s-plugin-sidecar.yaml
