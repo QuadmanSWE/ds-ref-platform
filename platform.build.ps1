@@ -152,6 +152,23 @@ task prereqs {
         }
     }
 }
+task changebranch {
+    $mainbranch = 'main'
+    $currentBranch = git rev-parse --abbrev-ref HEAD
+    $filesToChange = Get-ChildItem -Recurse -Filter 'gitops-*.yaml'
+    foreach ($file in $filesToChange) {
+        $content = Get-Content $file
+        if($content -match ": $mainbranch") {
+            $content = $content -replace ": $mainbranch", ": $currentBranch"
+        }
+        else{
+            $content = $content -replace ": $currentBranch", ": $mainbranch"
+        }
+        
+        $content | Set-Content $file
+    }
+}
+task cb changebranch
 task dns_local local_dns
 task init prereqs, bootstrap, cert_up, local_dns
 task up cluster_up, crossplane_up
