@@ -6,3 +6,39 @@ resources:
   - "02-composition.yaml"
   - "03-functions.yaml"
   - "04-xr-master.yaml"
+# adds argocd sync-wave annotations to the resources
+  # annotations:
+  #   argocd.argoproj.io/sync-wave: "-8"
+  #   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+
+patches:
+  - patch: |-
+      - op: add
+        path: /metadata/annotations
+        value:
+          argocd.argoproj.io/sync-wave: "-9"
+          argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    target:
+      group: apiextensions.crossplane.io
+      version: v1
+      kind: CompositeResourceDefinition
+  - patch: |-
+      - op: add
+        path: /metadata/annotations
+        value:
+          argocd.argoproj.io/sync-wave: "-8"
+          argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    target:
+      group: apiextensions.crossplane.io
+      version: v1
+      kind: Composition
+  - patch: |-
+      - op: add
+        path: /metadata/annotations
+        value:
+          argocd.argoproj.io/sync-wave: "-8"
+          argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    target:
+      group: pkg.crossplane.io
+      version: v1beta1
+      kind: Function
