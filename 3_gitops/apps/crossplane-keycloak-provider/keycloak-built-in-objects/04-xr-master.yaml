@@ -3,6 +3,8 @@ apiVersion: keycloak.crossplane.io/v1alpha1
 kind: XBuiltinObjects
 metadata:
   name: keycloak-builtin-objects-master
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   providerConfigName: keycloak-provider-config
   providerSecretName: keycloak-credentials
