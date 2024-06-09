@@ -2,6 +2,8 @@ apiVersion: realm.keycloak.crossplane.io/v1alpha1
 kind: Realm
 metadata:
   name: developers-realm
+  annotations:
+    link.argocd.argoproj.io/external-link: https://kc.platform.local/admin/master/console/#/developers-realm
 spec:
   forProvider:
     realm: developers-realm
