@@ -4,12 +4,4 @@ namespace: crossplane-system
 resources:
   - "./provider-keycloak.yaml"
   - "./provider-config-keycloak.yaml"
-secretGenerator:
-  - name: keycloak-credentials
-    type: Opaque
-    literals:
-      - credentials={"client_id":"crossplane","client_secret":"xppw_LnaEt79B47CxPEafJpXx","url":"https://kc.platform.local","realm":"master","base_Path":"/","tls_insecure_skip_verify":"true","root_ca_certificate":""} 
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    note: kustomize-generated
+  - "./keycloak-credentials.yaml"
