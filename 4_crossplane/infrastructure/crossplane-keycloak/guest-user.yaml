@@ -13,3 +13,16 @@ spec:
     lastName: "User"
   providerConfigRef:
     name: keycloak-config
+---
+apiVersion: user.keycloak.crossplane.io/v1alpha1
+kind: Roles
+metadata:
+  name: guest-user-developers-realm
+spec:
+  forProvider:
+    realmIdRef: 
+      name: developers-realm
+    userIdRef: 
+      name: guest-user
+    roleIdsRefs:
+      name: builtin-developers-realm-realm-management-manage-realm
