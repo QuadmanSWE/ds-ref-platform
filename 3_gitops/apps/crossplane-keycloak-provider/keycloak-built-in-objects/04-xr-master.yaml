@@ -6,8 +6,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  providerConfigName: keycloak-provider-config
-  providerSecretName: keycloak-credentials
+  providerConfigName: keycloak-config
+  providerSecretName: keycloak-credentials-internal
   realm: master
   builtinClients: 
     - account

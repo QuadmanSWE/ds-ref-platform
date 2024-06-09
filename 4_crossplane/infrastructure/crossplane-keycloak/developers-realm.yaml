@@ -15,8 +15,8 @@ kind: XBuiltinObjects
 metadata:
   name: keycloak-builtin-objects-developers-realm
 spec:
-  providerConfigName: keycloak-provider-config
-  providerSecretName: keycloak-credentials
+  providerConfigName: keycloak-config
+  providerSecretName: keycloak-credentials-internal
   realm: developers-realm
   builtinClients: 
     - account
