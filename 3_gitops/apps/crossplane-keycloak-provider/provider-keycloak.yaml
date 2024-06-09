@@ -5,4 +5,4 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-2"
 spec:
-  package: xpkg.upbound.io/crossplane-contrib/provider-keycloak:v0.20.0
+  package: xpkg.upbound.io/crossplane-contrib/provider-keycloak:v0.21.0
