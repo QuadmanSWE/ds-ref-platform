@@ -5,3 +5,4 @@ resources:
   - "./provider-keycloak.yaml"
   - "./provider-config-keycloak.yaml"
   - "./keycloak-credentials.yaml"
+  - "./keycloak-built-in-objects"
