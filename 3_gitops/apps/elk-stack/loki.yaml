@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+spec:
+  destination:
+    namespace: development
+    server: 'https://kubernetes.default.svc'
+  source:
+    repoURL: 'https://grafana.github.io/helm-charts'
+    targetRevision: 5.44.4
+    chart: loki
+    helm:
+      parameters:
+        - name: loki.auth_enabled
+          value: 'false'
+        - name: loki.commonConfig.replication_factor
+          value: '1'
+        - name: loki.storage.type
+          value: 'filesystem'
+        - name: singleBinary.replicas
+          value: '1'
+  sources: []
+  project: default
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
+      selfHeal: true

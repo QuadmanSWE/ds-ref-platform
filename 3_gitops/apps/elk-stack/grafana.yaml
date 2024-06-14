@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+spec:
+  destination:
+    namespace: development
+    server: 'https://kubernetes.default.svc'
+  source:
+    repoURL: 'https://grafana.github.io/helm-charts'
+    targetRevision: 7.3.11
+    chart: grafana
+    helm:
+      values: |
+        grafana.ini:
+          auth:
+            oauth_auto_login: true
+            signout_redirect_url: https://kc.platform.local/realms/dev/protocol/openid-connect/logout
+          auth.proxy:
+            enabled: true
+            header_name: x-auth-request-email
+            header_property: email
+            headers: x-auth-request-user
+            enable_login_token: false
+          users:
+            allow_sign_up: false
+            auto_assign_org: true
+            auto_assign_org_role: Editor
+          auth.anonymous:
+            enabled: false
+            org_role: Viewer
+        persistence:
+          enabled: true
+          type: pvc
+          size: 1Gi
+  sources: []
+  project: default
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
+      selfHeal: true
