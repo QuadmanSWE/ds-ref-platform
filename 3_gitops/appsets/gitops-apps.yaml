@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/QuadmanSWE/ds-ref-platform
-        revision: prereq-scoop-installer
+        revision: main
         directories:
           - path: 3_gitops/apps/*
   template:
@@ -20,7 +20,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/QuadmanSWE/ds-ref-platform
-        targetRevision: prereq-scoop-installer
+        targetRevision: main
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
