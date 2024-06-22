@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/QuadmanSWE/ds-ref-platform
-        revision: xp-keycloak-test
+        revision: prereq-scoop-installer
         directories:
           - path: 4_crossplane/infrastructure/*
   template:
@@ -20,7 +20,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/QuadmanSWE/ds-ref-platform
-        targetRevision: xp-keycloak-test
+        targetrevision: prereq-scoop-installer
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
