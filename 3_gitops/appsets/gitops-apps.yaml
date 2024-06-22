@@ -20,7 +20,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/QuadmanSWE/ds-ref-platform
-        targetrevision: prereq-scoop-installer
+        targetRevision: prereq-scoop-installer
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
