@@ -7,6 +7,7 @@ The goal of this repo is to showcase free and open source software that plays ni
 ## Setup
 
 ``` PowerShell
+Install-Module InvokeBuild
 Invoke-Build init
 Invoke-Build up
 ```

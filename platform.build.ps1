@@ -119,13 +119,56 @@ task prereqs {
         "helm",
         "kustomize"
     )
+
+    $installScoopScript = @"
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+    Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+    
+    scoop bucket add tilt-dev https://github.com/tilt-dev/scoop-bucket
+"@
     foreach ($req in $reqs) {
-        if (-not (Get-Command $req -ErrorAction SilentlyContinue)) {
-            throw "$req is required but not found"
+        if ( Get-Command $req -ErrorAction SilentlyContinue) {
+            Write-Host "$req found"
+            continue
         }
-        Write-Host "$req found"
+        else {
+            Write-Host "$req not found. Please install it and try again"
+            $scoopInstalled = Get-Command scoop -ErrorAction SilentlyContinue
+            if(-not $scoopInstalled) {
+                $installScoop = Read-Host -Prompt "Would you like to install scoop? (y/n)"
+                if($installScoop -eq "y") {
+                    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+                    Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+                    scoop bucket add tilt-dev https://github.com/tilt-dev/scoop-bucket
+                }
+                else {
+                    break;
+                }
+            }
+            $installNowWithScoop = Read-Host -Prompt "Would you like to install $req with scoop now? (y/n)"
+            if($installNowWithScoop -eq "y") {
+                scoop install $req
+            }
+        }
     }
 }
+task changebranch {
+    $mainbranch = 'main'
+    $currentBranch = git rev-parse --abbrev-ref HEAD
+    $filesToChange = Get-ChildItem -Recurse -Filter 'gitops-*.yaml'
+    foreach ($file in $filesToChange) {
+        $content = Get-Content $file
+        if($content -match ": $mainbranch") {
+            $content = $content -replace ": $mainbranch", ": $currentBranch"
+        }
+        else{
+            $content = $content -replace ": $currentBranch", ": $mainbranch"
+        }
+        
+        $content | Set-Content $file
+    }
+}
+task cb changebranch
 task dns_local local_dns
 task init prereqs, bootstrap, cert_up, local_dns
 task up cluster_up, crossplane_up
