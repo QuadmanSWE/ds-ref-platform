@@ -3,3 +3,4 @@
 2_platform/argocd/secrets/
 2_platform/keycloak/keycloak-admin-patch.yaml
 2_platform/keycloak-auth-patch.yaml
+**/charts/
