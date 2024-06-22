@@ -137,7 +137,9 @@ task prereqs {
             if(-not $scoopInstalled) {
                 $installScoop = Read-Host -Prompt "Would you like to install scoop? (y/n)"
                 if($installScoop -eq "y") {
-                    iex $installScoopScript
+                    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+                    Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+                    scoop bucket add tilt-dev https://github.com/tilt-dev/scoop-bucket
                 }
                 else {
                     break;
