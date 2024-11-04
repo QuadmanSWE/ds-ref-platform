@@ -19,13 +19,13 @@ spec:
     spec:
       containers:
       - name: keycloak
-        image: quay.io/keycloak/keycloak:23.0.1
+        image:  docker.io/dsoderlund/keycloak-multitenant:latest
         ports:
         - containerPort: 8080
         envFrom: 
         - configMapRef:
             name: keycloak-cm
-        args: ["start-dev"]
+        args: ["start-dev", "--spi-email-template-provider=freemarker-plus-mustache", "--spi-email-template-freemarker-plus-mustache-enabled=true", "--spi-theme-cache-themes=false"]
         resources:
           limits:
             cpu: 1000m
