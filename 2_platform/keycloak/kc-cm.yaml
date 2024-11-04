@@ -14,4 +14,4 @@ data:
   KC_DB_PASSWORD: 'kcpw_tJLMDHwUqcfgO20TqQcO'
   KC_PROXY: "edge"
   KC_LOG_LEVEL: 'info'
-  KC_HOSTNAME_STRICT_HTTPS: 'true'
+  KC_HOSTNAME: 'https://kc.platform.local'
