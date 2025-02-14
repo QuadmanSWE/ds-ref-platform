@@ -89,7 +89,7 @@ The platform contains
 - oauth2proxy (can act as an api gateway, and lets us deploy apps in our platform that get single sign on and stuff for free)
 - postgres (got to run those databases somewhere, you can switch this out easily but its here to not leave any gaps)
 - argocd (gitops tool with a kick as ui, can sync desired state of any thing kubernetes native to one or more clusters)
-- crossplane (turn your cluster in-side-out, why just use the best api and distributed storage ever invented to manage containers? Let's kubernetes be the control plane of anything)
+- crossplane (turn your cluster in-side-out, why just use the best api and distributed storage ever invented to manage containers? Lets kubernetes be the control plane of anything)
 
 ## I don't need help setting up a local kubernetes cluster
 
@@ -115,7 +115,7 @@ You can point this appset to deploy apps from some other repo/branch than this t
 
 ## And infrastructure as data?
 
-Infrastructure can be deployed through kubernets since we have equiping it with crossplane. You need to add the providers and their credentials as you need, but there is one out of the box for keycloak for you to play with.
+Infrastructure can be deployed through kubernetes since we have equipped it with crossplane. You need to add the providers and their credentials as you need, but there is one out of the box for keycloak for you to play with.
 
 You can check out the app that managed keycloak resources here: https://argocd.platform.local/applications/argocd/crossplane-keycloak
 
