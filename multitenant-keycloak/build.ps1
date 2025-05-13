@@ -1,17 +1,20 @@
 $registryName = 'docker.io'
 $registryFqdn = $registryName
 $repo = 'dsoderlund/keycloak-multitenant'
-$tag = 'latest'
+$newtag = '20250513T151000'
+$appversion = "26.2.3"
 
-$localtag = "$repo`:$tag"
-$remotetag = "$registryFqdn/$localtag"
+$localtag = "$repo`:$newtag"
 
-docker build -t $localtag --build-arg APP_SOURCE_REPO=quay.io/phasetwo/phasetwo-keycloak --build-arg APP_VERSION=26.0.2 .
+docker build -t $localtag --build-arg APP_SOURCE_REPO=quay.io/phasetwo/phasetwo-keycloak --build-arg APP_VERSION=$appversion .
 
 # push to kind
 kind load docker-image -n ds-ref-cluster $localtag
-kind load docker-image -n ds-ref-cluster $remotetag
 
 # ready for rock and roll
-docker tag $localtag $remotetag
-docker push $remotetag
+docker login 
+foreach ($t in ($newtag, 'latest')) {
+    $remoteTag = "$registryFqdn/$repo`:$t"
+    docker tag $localtag $remoteTag
+    docker push $remoteTag
+}
