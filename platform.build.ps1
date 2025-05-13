@@ -119,13 +119,6 @@ task prereqs {
         "helm",
         "kustomize"
     )
-
-    $installScoopScript = @"
-    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-    Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
-    
-    scoop bucket add tilt-dev https://github.com/tilt-dev/scoop-bucket
-"@
     foreach ($req in $reqs) {
         if ( Get-Command $req -ErrorAction SilentlyContinue) {
             Write-Host "$req found"
