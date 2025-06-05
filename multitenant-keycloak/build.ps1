@@ -10,6 +10,7 @@ $newtag = get-date -format "yyyyMMddTHHmmss" #'20250513T151000'
 $appversion = "26.2.5"
 
 $localtag = "$repo`:$newtag"
+$remotetag = "$registryFqdn/$localtag"
 
 docker build -t $localtag --build-arg APP_SOURCE_REPO=quay.io/phasetwo/phasetwo-keycloak --build-arg APP_VERSION=$appversion .
 
@@ -18,8 +19,8 @@ docker build -t $localtag --build-arg APP_SOURCE_REPO=quay.io/phasetwo/phasetwo-
 
 # ready for rock and roll
 docker login 
-foreach ($t in ($newtag, 'latest')) {
-    $remoteTag = "$registryFqdn/$repo`:$t"
-    docker tag $localtag $remoteTag
-    docker push $remoteTag
-}
+
+docker tag $localtag $remoteTag
+docker push $remoteTag
+docker push "$registryFqdn/$repo`:latest"
+
