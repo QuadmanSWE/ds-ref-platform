@@ -7,7 +7,7 @@ spec:
   forProvider:
     realmIdRef: 
       name: developers-realm
-    username: "ds"
+    username: "ds@dsoderlund.consulting"
     initialPassword:
       - valueSecretRef:
           name: crossplane-keycloak-secret
