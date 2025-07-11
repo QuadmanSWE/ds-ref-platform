@@ -19,6 +19,8 @@ metadata:
     dsoderlund.consulting/rendered-by: yaml
     dsoderlund.consulting/managed-by: crossplane
 spec:
+  providerConfigRef:
+    name: keycloak-config 
   forProvider:
     realmIdRef:
       name: developers-realm
@@ -35,6 +37,8 @@ metadata:
     dsoderlund.consulting/rendered-by: yaml
     dsoderlund.consulting/managed-by: crossplane
 spec:
+  providerConfigRef:
+    name: keycloak-config 
   forProvider:
     realmIdRef:
       name: developers-realm
