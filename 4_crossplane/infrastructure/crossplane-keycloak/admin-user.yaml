@@ -14,6 +14,7 @@ spec:
           key: admin-password
           namespace: platform
     email: "ds@dsoderlund.consulting"
+    emailVerified: true
     firstName: "David"
     lastName: "Söderlund"
   providerConfigRef:
