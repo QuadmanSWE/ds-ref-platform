@@ -35,6 +35,7 @@ k8s_resource('create-client-oauth2proxy', labels="oauth2-proxy")
 k8s_resource('argocd-server', labels="argocd")
 k8s_resource('argocd-repo-server', labels="argocd")
 k8s_resource('argocd-redis', labels="argocd")
+k8s_resource('argocd-redis-secret-init', labels="argocd") # todo, make sure the job completes. Maybe istio sidecar is the problem?
 k8s_resource('argocd-application-controller', labels="argocd")
 k8s_resource('argocd-applicationset-controller', labels="argocd")
 k8s_resource('argocd-notifications-controller', labels="argocd")

@@ -65,7 +65,6 @@ task local_dns {
     write-host "copy and paste into your host files (need to save as admin)"
     @"
 ############################################
-127.0.0.1 backstage.$dnsname
 127.0.0.1 kc.$dnsname
 127.0.0.1 argocd.$dnsname
 127.0.0.1 pg.$dnsname

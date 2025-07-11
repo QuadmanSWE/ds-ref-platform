@@ -52,5 +52,5 @@ helmCharts:
 - name: crossplane
   namespace: crossplane-system
   releaseName: crossplane
-  repo: https://charts.crossplane.io/stable
-  version: ~1.20.0
+  repo: https://charts.crossplane.io/preview
+  version: 2.0.0-preview.1 # todo, look forward to release in august 2025
