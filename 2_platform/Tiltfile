@@ -29,7 +29,6 @@ k8s_resource('kc', labels="keycloak")
 # oauth2 proxy
 k8s_resource('oauth2-proxy', labels="oauth2-proxy")
 k8s_resource('oauth2-proxy-redis-master', labels="oauth2-proxy")
-#k8s_resource('create-client-oauth2proxy', labels="oauth2-proxy")
 
 # argocd
 k8s_resource('argocd-server', labels="argocd")
@@ -39,7 +38,6 @@ k8s_resource('argocd-redis-secret-init', labels="argocd") # todo, make sure the 
 k8s_resource('argocd-application-controller', labels="argocd")
 k8s_resource('argocd-applicationset-controller', labels="argocd")
 k8s_resource('argocd-notifications-controller', labels="argocd")
-k8s_resource('create-client-argocd', labels="argocd")
 
 # crossplane
 k8s_resource('crossplane', labels="crossplane")

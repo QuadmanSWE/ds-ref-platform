@@ -3,11 +3,11 @@ kind: Kustomization
 namespace: argocd
 resources:
   - "./argocd-vs.yaml"
-  - "./create-client.yaml"
-configMapGenerator:
-  - name: client-script
-    files:
-      - "./create-client.sh"
+#   - "./create-client.yaml"
+# configMapGenerator:
+#   - name: client-script
+#     files:
+#       - "./create-client.sh"
 
 secretGenerator:
   - name: argocd-secret
@@ -33,7 +33,7 @@ helmCharts:
           admin.enabled: "false"
           oidc.config: |
             name: keycloak
-            issuer: https://kc.platform.local/realms/master
+            issuer: https://kc.platform.local/realms/developers-realm
             clientID: argocd
             clientSecret: $oidc.keycloak.clientSecret
             requestedScopes: ["openid", "profile", "email"]

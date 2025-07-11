@@ -36,3 +36,20 @@ spec:
       - name: "builtin-developers-realm-realm-admin"
   providerConfigRef:
     name: keycloak-config
+---
+apiVersion: user.keycloak.crossplane.io/v1alpha1
+kind: Groups
+metadata:
+  name: developers-ds-groups
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  forProvider:
+    realmIdRef: 
+      name: developers-realm
+    userIdRef: 
+      name: developers-ds
+    groupIdsRefs: 
+      - name: "argocd-admin"
+  providerConfigRef:
+    name: keycloak-config

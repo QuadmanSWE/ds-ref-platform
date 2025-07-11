@@ -1,0 +1,40 @@
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: argocd
+  annotations:
+    dsoderlund.consulting/rendered-by: yaml
+    dsoderlund.consulting/managed-by: crossplane
+spec:
+  providerConfigRef:
+    name: keycloak-config
+  deletionPolicy: Orphan
+  managementPolicies: ["*"]
+  forProvider:
+    realmId: master
+    accessType: CONFIDENTIAL
+    clientId: argocd
+    clientSecretSecretRef:
+      name: crossplane-keycloak-secret
+      key: argocd-password
+      namespace: platform
+    name: argocd
+    description: "Applied by Crossplane (changes made in UI will be overwritten)"
+    validRedirectUris:
+      - "http://localhost:8085/auth/callback"
+      - "https://argocd.platform.local/*"
+    standardFlowEnabled: true
+    serviceAccountsEnabled: true
+    frontchannelLogoutEnabled: true
+---
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  name: argocd-admin
+spec:
+  forProvider:
+    realmIdRef:
+      name: developers-realm
+    name: argocd-admin
+  providerConfigRef:
+    name: keycloak-config
