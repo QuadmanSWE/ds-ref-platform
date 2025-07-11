@@ -1,0 +1,28 @@
+# This user has additional fields like email, first name, and last name.
+apiVersion: user.keycloak.crossplane.io/v1alpha1
+kind: User
+metadata:
+  name: developers-ds
+spec:
+  forProvider:
+    realmIdRef: 
+      name: developers-realm
+    username: "ds"
+    initialPassword: "demofördaniel"
+    email: "ds@dsoderlund.consulting"
+    firstName: "David"
+    lastName: "Söderlund"
+  providerConfigRef:
+    name: keycloak-config
+---
+apiVersion: user.keycloak.crossplane.io/v1alpha1
+kind: Roles
+metadata:
+  name: developers-ds-roles
+spec:
+  forProvider:
+    realmId: developers-realm
+    userId: developers-ds
+    roleId: "builtin-developers-realm-admin"
+  providerConfigRef:
+    name: keycloak-config

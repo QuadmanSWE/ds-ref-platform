@@ -7,5 +7,6 @@ spec:
     realm: developers-realm
     enabled: true
     displayName: "Home of the Developers"
+    adminTheme: "phasetwo.v2"
   providerConfigRef:
     name: keycloak-config
