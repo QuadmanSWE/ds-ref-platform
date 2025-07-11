@@ -83,3 +83,26 @@ spec:
     standardFlowEnabled: true
     serviceAccountsEnabled: true
     frontchannelLogoutEnabled: true
+---
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: ClientDefaultScopes
+metadata:
+  name: argocd-scopes
+  annotations:
+    dsoderlund.consulting/rendered-by: yaml
+    dsoderlund.consulting/managed-by: crossplane
+spec:
+  providerConfigRef:
+    name: keycloak-config
+  forProvider:
+    realmIdRef:
+      name: developers-realm
+    clientIdRef:
+      name: argocd
+    defaultScopes:
+      - openid
+      - profile
+      - email
+      - groups
+
+---
