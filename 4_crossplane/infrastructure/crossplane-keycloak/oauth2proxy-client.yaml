@@ -9,7 +9,7 @@ spec:
   providerConfigRef:
     name: keycloak-config
   deletionPolicy: Orphan
-  managementPolicies: "*"
+  managementPolicies: ["*"]
   forProvider:
     realmId: master
     accessType: Confidential
