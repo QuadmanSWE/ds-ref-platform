@@ -1,3 +1,53 @@
+---
+apiVersion: group.keycloak.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  name: argocd-admin
+spec:
+  forProvider:
+    realmIdRef:
+      name: developers-realm
+    name: argocd-admin
+  providerConfigRef:
+    name: keycloak-config
+---
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: ClientScope
+metadata:
+  name: groups
+  annotations:
+    dsoderlund.consulting/rendered-by: yaml
+    dsoderlund.consulting/managed-by: crossplane
+spec:
+  forProvider:
+    realmIdRef:
+      name: developers-realm
+    name: groups
+    includeInTokenScope: true
+    consentScreenText: "Access to group membership"
+    guiOrder: 0
+---
+apiVersion: client.keycloak.crossplane.io/v1alpha1
+kind: ProtocolMapper
+metadata:
+  name: groups-mapper
+  annotations:
+    dsoderlund.consulting/rendered-by: yaml
+    dsoderlund.consulting/managed-by: crossplane
+spec:
+  forProvider:
+    realmIdRef:
+      name: developers-realm
+    name: groups
+    protocol: openid-connect
+    protocolMapper: "oidc-group-membership-mapper"
+    config:
+      full.path: "false"
+      id.token.claim: "true"
+      access.token.claim: "true"
+      claim.name: "groups"
+      userinfo.token.claim: "true"
+---
 apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
 kind: Client
 metadata:
@@ -11,7 +61,8 @@ spec:
   deletionPolicy: Orphan
   managementPolicies: ["*"]
   forProvider:
-    realmId: master
+    realmIdRef: 
+      name: developers-realm
     accessType: CONFIDENTIAL
     clientId: argocd
     clientSecretSecretRef:
@@ -26,15 +77,3 @@ spec:
     standardFlowEnabled: true
     serviceAccountsEnabled: true
     frontchannelLogoutEnabled: true
----
-apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
-kind: Group
-metadata:
-  name: argocd-admin
-spec:
-  forProvider:
-    realmIdRef:
-      name: developers-realm
-    name: argocd-admin
-  providerConfigRef:
-    name: keycloak-config
