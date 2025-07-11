@@ -11,7 +11,8 @@ spec:
   deletionPolicy: Orphan
   managementPolicies: ["*"]
   forProvider:
-    realmId: master
+    realmIdRef:
+      name: developers-realm
     accessType: CONFIDENTIAL
     clientId: oauth2proxy
     clientSecretSecretRef:
