@@ -9,10 +9,10 @@ spec:
       name: developers-realm
     username: "ds"
     initialPassword:
-      valueSecretRef:
-        name: crossplane-keycloak-secret
-        key: admin-password
-        namespace: platform
+      - valueSecretRef:
+          name: crossplane-keycloak-secret
+          key: admin-password
+          namespace: platform
     email: "ds@dsoderlund.consulting"
     firstName: "David"
     lastName: "Söderlund"
