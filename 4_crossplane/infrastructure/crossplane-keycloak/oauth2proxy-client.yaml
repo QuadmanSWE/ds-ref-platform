@@ -1,0 +1,32 @@
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: oauth2-proxy
+  annotations:
+    dsoderlund.consulting/rendered-by: yaml
+    dsoderlund.consulting/managed-by: crossplane
+spec:
+  providerConfigRef:
+    name: keycloak-config
+  deletionPolicy: Orphan
+  managementPolicies: "*"
+  forProvider:
+    realmId: master
+    accessType: Confidential
+    clientId: oauth2proxy
+    clientSecretSecretRef:
+      name: crossplane-keycloak-secret
+      key: oap-password
+      namespace: oauth2-proxy
+    name: oauth2proxy
+    description: "Applied by Crossplane (changes made in UI will be overwritten)"
+    validRedirectUris:
+      - "*"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: crossplane-keycloak-secret
+  namespace: oauth2-proxy
+stringData:
+  oap-password: oqoVVhGECYJRPkJ5OrixYJ3tki5nRg53
