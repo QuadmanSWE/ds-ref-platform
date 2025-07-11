@@ -28,8 +28,11 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
 spec:
   forProvider:
-    realmId: developers-realm
-    userId: developers-ds
-    roleId: "builtin-developers-realm-admin"
+    realmIdRef: 
+      name: developers-realm
+    userIdRef: 
+      name: developers-ds
+    roleIdsRefs: 
+      - name: "builtin-developers-realm-realm-admin"
   providerConfigRef:
     name: keycloak-config
