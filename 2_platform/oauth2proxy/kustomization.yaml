@@ -6,6 +6,7 @@ resources:
   - "./redis-secret.yaml"
   - "./secret.yaml"
   - "./create-client.yaml"
+  - "./oap-from-helm-template.yaml"
 configMapGenerator:
   - name: client-script
     files:

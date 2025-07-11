@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: keycloak
-        image:  docker.io/dsoderlund/keycloak-multitenant:latest
+        image:  docker.io/dsoderlund/keycloak-multitenant:20250605T104230
         ports:
         - containerPort: 8080
         envFrom: 
