@@ -3,11 +3,6 @@ kind: Kustomization
 namespace: argocd
 resources:
   - "./argocd-vs.yaml"
-#   - "./create-client.yaml"
-# configMapGenerator:
-#   - name: client-script
-#     files:
-#       - "./create-client.sh"
 
 secretGenerator:
   - name: argocd-secret
