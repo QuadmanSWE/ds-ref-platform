@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: istio:aggregate-to-crossplane
+  labels:
+    app: crossplane    
+    app.kubernetes.io/version: "2.0.0-preview.1"
+    crossplane.io/scope: "system"
+    rbac.crossplane.io/aggregate-to-crossplane: "true"
+rules:
+  - apiGroups: ["networking.istio.io"]
+    resources: ["virtualservices"]
+    verbs: [ "*"]
+  - apiGroups: ["networking.istio.io"]
+    resources: ["gateways"]
+    verbs: [ "get", "list"]

@@ -5,12 +5,12 @@ resources:
   - "./cm.yaml"
   - "./redis-secret.yaml"
   - "./secret.yaml"
-  - "./create-client.yaml"
+  # - "./create-client.yaml"
   - "./oap-from-helm-template.yaml"
-configMapGenerator:
-  - name: client-script
-    files:
-      - "./create-client.sh"
+# configMapGenerator:
+#   - name: client-script
+#     files:
+#       - "./create-client.sh"
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
