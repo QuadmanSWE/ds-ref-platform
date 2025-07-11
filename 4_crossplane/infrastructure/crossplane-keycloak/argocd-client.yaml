@@ -42,6 +42,8 @@ spec:
   forProvider:
     realmIdRef:
       name: developers-realm
+    clientScopeIdRef:
+      name: groups
     name: groups
     protocol: openid-connect
     protocolMapper: "oidc-group-membership-mapper"
