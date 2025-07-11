@@ -12,7 +12,7 @@ spec:
   managementPolicies: ["*"]
   forProvider:
     realmId: master
-    accessType: Confidential
+    accessType: CONFIDENTIAL
     clientId: oauth2proxy
     clientSecretSecretRef:
       name: crossplane-keycloak-secret
@@ -22,6 +22,8 @@ spec:
     description: "Applied by Crossplane (changes made in UI will be overwritten)"
     validRedirectUris:
       - "*"
+    standardFlowEnabled: true
+    serviceAccountsEnabled: true
 ---
 apiVersion: v1
 kind: Secret
