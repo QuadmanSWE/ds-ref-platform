@@ -23,6 +23,8 @@ apiVersion: user.keycloak.crossplane.io/v1alpha1
 kind: Roles
 metadata:
   name: developers-ds-roles
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   forProvider:
     realmId: developers-realm
