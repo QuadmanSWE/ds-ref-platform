@@ -16,3 +16,5 @@ generatorOptions:
   disableNameSuffixHash: true
   annotations:
     note: kustomize-generated
+  labels:
+    type: provider-credentials
