@@ -8,6 +8,8 @@ spec:
   providerConfigName: keycloak-config
   providerSecretName: keycloak-credentials
   realm: developers-realm
+  builtinClients:
+    - realm-management
   builtinRealmRoles:
     - admin
   builtinAuthenticationFlows:
