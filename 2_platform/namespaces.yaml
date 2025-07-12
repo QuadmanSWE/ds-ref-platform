@@ -41,3 +41,10 @@ metadata:
   name: crossplane-system
   labels:
     istio-injection: disabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cnpg-system
+  labels:
+    istio-injection: disabled
