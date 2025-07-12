@@ -6,9 +6,20 @@ resources:
   - "./kc-svc.yaml"
   - "./kc-vs.yaml"
   - "./kc-cm.yaml"
+  - "./kc-pg.yaml"
 patches:
 - target:
     version: v1
     kind: ConfigMap
     name: keycloak-cm
   path: ./keycloak-admin-patch.yaml
+secretGenerator:
+  - name: keycloak-db-secret
+    type: Opaque
+    literals:
+      - username=keycloak
+      - password=kcpw_tJLMDHwUqcfgO20TqQcO
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    note: kustomize-generated
