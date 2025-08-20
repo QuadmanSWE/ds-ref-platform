@@ -1,2 +1,3 @@
 include('../2_platform/Tiltfile')
 k8s_yaml('appsets/gitops-apps.yaml')
+k8s_yaml('appsets/gitops-infra.yaml')

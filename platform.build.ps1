@@ -39,28 +39,18 @@ task 2_platform_down {
     tilt down 
     pop-location
 }
-task 3_apps_up {
+task 3_gitops_up {
     push-location 3_gitops
     tilt up 
     pop-location
 }
-task 3_apps_down {
+task 3_gitops_down {
     push-location 3_gitops
     tilt down 
     pop-location
 }
-task 4_crossplane_up {
-    push-location 4_crossplane
-    tilt up
-    pop-location
-}
-task 4_crossplane_down {
-    push-location 4_crossplane
-    tilt down
-    pop-location
-}
-task tilt_up 4_crossplane_up
-task tilt_down 4_crossplane_down
+task tilt_up 3_gitops_up
+task tilt_down 3_gitops_down
 task local_dns {
     write-host "copy and paste into your host files (need to save as admin)"
     @"
@@ -159,5 +149,5 @@ task changebranch {
 task cb changebranch
 task dns_local local_dns
 task init prereqs, bootstrap, 0_cert_up, local_dns
-task up 1_cluster_up, 4_crossplane_up
+task up 1_cluster_up, 3_gitops_up
 task down 1_cluster_down
