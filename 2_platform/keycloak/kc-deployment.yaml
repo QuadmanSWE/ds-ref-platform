@@ -22,6 +22,12 @@ spec:
         image:  docker.io/dsoderlund/keycloak-multitenant:20250605T104230
         ports:
         - containerPort: 8080
+        env:
+        - name: KC_DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-postgres-cluster-app
+              key: fqdn-jdbc-uri
         envFrom: 
         - configMapRef:
             name: keycloak-cm

@@ -151,3 +151,6 @@ task dns_local local_dns
 task init prereqs, bootstrap, 0_cert_up, local_dns
 task up 1_cluster_up, 3_gitops_up
 task down 1_cluster_down
+task 1 1_cluster_up
+task 2 2_platform_up
+task 3 3_gitops_up

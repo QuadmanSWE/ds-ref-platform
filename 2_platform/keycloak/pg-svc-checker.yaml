@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: svcchecker
 data:
-  SVC_HOST: postgres.platform
+  SVC_HOST: keycloak-postgres-cluster-rw.platform
   SVC_PORT: "5432"
   SVC_WAIT_INTERVAL: "4"

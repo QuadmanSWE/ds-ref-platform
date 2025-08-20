@@ -1,15 +1,10 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: keycloak
+  name: keycloak-postgres-cluster
+  namespace: platform
 spec:
   instances: 1
-  bootstrap:
-    initdb:
-      database: keycloak
-      owner: keycloak
-      secret:
-        name: keycloak-db-secret
   storage:
     size: 2Gi
   inheritedMetadata:
