@@ -18,3 +18,11 @@ helmCharts:
     releaseName: crossplane
     repo: https://charts.crossplane.io/stable
     version: 2.0.2
+patches:
+  - target:
+      group: pkg.crossplane.io
+      kind: Function
+    patch: |
+      - op: add
+        path: /metadata/annotations
+        value: {"argocd.argoproj.io/sync-wave": "1", "argocd.argoproj.io/sync-options": "SkipDryRunOnMissingResource=true"}
