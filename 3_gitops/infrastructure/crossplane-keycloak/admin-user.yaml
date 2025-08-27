@@ -2,7 +2,7 @@
 apiVersion: user.keycloak.crossplane.io/v1alpha1
 kind: User
 metadata:
-  name: developers-ds
+  name: developers-admin
 spec:
   forProvider:
     realmIdRef: 
@@ -23,7 +23,7 @@ spec:
 apiVersion: user.keycloak.crossplane.io/v1alpha1
 kind: Roles
 metadata:
-  name: developers-ds-roles
+  name: developers-admin-roles
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
@@ -31,7 +31,7 @@ spec:
     realmIdRef: 
       name: developers-realm
     userIdRef: 
-      name: developers-ds
+      name: developers-admin
     roleIdsRefs: 
       - name: "builtin-developers-realm-realm-admin"
   providerConfigRef:
@@ -40,7 +40,7 @@ spec:
 apiVersion: user.keycloak.crossplane.io/v1alpha1
 kind: Groups
 metadata:
-  name: developers-ds-groups
+  name: developers-admin-groups
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
@@ -48,7 +48,7 @@ spec:
     realmIdRef: 
       name: developers-realm
     userIdRef: 
-      name: developers-ds
+      name: developers-admin
     groupIdsRefs: 
       - name: "argocd-admin"
   providerConfigRef:
