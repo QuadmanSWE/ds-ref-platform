@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: crossplane-system
 resources:
   - create-client.yaml
+  - crossplane-keycloak-secret.yaml
 configMapGenerator:
   - name: client-script
     files:
@@ -26,3 +27,8 @@ patches:
       - op: add
         path: /metadata/annotations
         value: {"argocd.argoproj.io/sync-wave": "1", "argocd.argoproj.io/sync-options": "SkipDryRunOnMissingResource=true"}
+  - target:
+      version: v1
+      kind: Secret
+      name: crossplane-keycloak-secret
+    path: ./crossplane-keycloak-secret-patch.yaml

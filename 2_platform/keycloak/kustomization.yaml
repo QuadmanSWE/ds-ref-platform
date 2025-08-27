@@ -14,7 +14,3 @@ patches:
     kind: ConfigMap
     name: keycloak-cm
   path: ./keycloak-admin-patch.yaml
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    note: kustomize-generated
