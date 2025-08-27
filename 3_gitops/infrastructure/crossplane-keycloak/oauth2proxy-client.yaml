@@ -18,7 +18,7 @@ spec:
     clientSecretSecretRef:
       name: crossplane-keycloak-secret
       key: oap-password
-      namespace: platform
+      namespace: crossplane-system
     name: oauth2proxy
     description: "Applied by Crossplane (changes made in UI will be overwritten)"
     validRedirectUris:

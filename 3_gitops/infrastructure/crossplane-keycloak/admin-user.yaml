@@ -12,7 +12,7 @@ spec:
       - valueSecretRef:
           name: crossplane-keycloak-secret
           key: admin-password
-          namespace: platform
+          namespace: crossplane-system
     email: "ds@dsoderlund.consulting"
     emailVerified: true
     firstName: "David"

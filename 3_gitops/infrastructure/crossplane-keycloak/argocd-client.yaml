@@ -74,7 +74,7 @@ spec:
     clientSecretSecretRef:
       name: crossplane-keycloak-secret
       key: argocd-password
-      namespace: platform
+      namespace: crossplane-system
     name: argocd
     description: "Applied by Crossplane (changes made in UI will be overwritten)"
     validRedirectUris:
