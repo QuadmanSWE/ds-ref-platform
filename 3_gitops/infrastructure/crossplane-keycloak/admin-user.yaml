@@ -15,8 +15,6 @@ spec:
           namespace: crossplane-system
     email: "ds@dsoderlund.consulting"
     emailVerified: true
-    firstName: "David"
-    lastName: "Söderlund"
   providerConfigRef:
     name: keycloak-config
 ---
