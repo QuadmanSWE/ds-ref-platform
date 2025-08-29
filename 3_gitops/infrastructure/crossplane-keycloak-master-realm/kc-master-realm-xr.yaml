@@ -1,13 +1,13 @@
 apiVersion: keycloak.crossplane.io/v1alpha1
 kind: XBuiltinObjects
 metadata:
-  name: keycloak-builtin-objects-developers-realm
+  name: keycloak-builtin-objects-master
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   providerConfigName: keycloak-config
   providerSecretName: keycloak-credentials
-  realm: developers-realm
+  realm: master
   builtinClients:
     - realm-management
   builtinRealmRoles:

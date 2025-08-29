@@ -6,7 +6,6 @@ resources:
   - "kc-svc.yaml"
   - "kc-vs.yaml"
   - "kc-cm.yaml"
-#  - "kc-pg.yaml"
   - "pg-svc-checker.yaml"
 patches:
 - target:

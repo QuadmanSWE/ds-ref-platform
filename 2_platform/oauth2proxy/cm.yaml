@@ -5,7 +5,7 @@ metadata:
 data:
   oauth2_proxy.cfg: |
     provider = "oidc"
-    oidc_issuer_url="https://kc.platform.local/realms/developers-realm"
+    oidc_issuer_url="https://kc.platform.local/realms/master"
     upstreams = [ "static://200" ]
     whitelist_domains = ["*.platform.local"]
     email_domains = "*"

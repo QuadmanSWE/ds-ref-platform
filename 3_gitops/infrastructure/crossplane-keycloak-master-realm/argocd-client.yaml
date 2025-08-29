@@ -6,7 +6,7 @@ metadata:
 spec:
   forProvider:
     realmIdRef:
-      name: developers-realm
+      name: master
     name: argocd-admin
   providerConfigRef:
     name: keycloak-config
@@ -23,7 +23,7 @@ spec:
     name: keycloak-config 
   forProvider:
     realmIdRef:
-      name: developers-realm
+      name: master
     name: groups
     includeInTokenScope: true
     consentScreenText: "Access to group membership"
@@ -41,7 +41,7 @@ spec:
     name: keycloak-config 
   forProvider:
     realmIdRef:
-      name: developers-realm
+      name: master
     clientScopeIdRef:
       name: groups
     name: groups
@@ -68,7 +68,7 @@ spec:
   managementPolicies: ["*"]
   forProvider:
     realmIdRef: 
-      name: developers-realm
+      name: master
     accessType: CONFIDENTIAL
     clientId: argocd
     clientSecretSecretRef:
@@ -96,7 +96,7 @@ spec:
     name: keycloak-config
   forProvider:
     realmIdRef:
-      name: developers-realm
+      name: master
     clientIdRef:
       name: argocd
     defaultScopes:

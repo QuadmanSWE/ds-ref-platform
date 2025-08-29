@@ -28,7 +28,7 @@ helmCharts:
           admin.enabled: "false"
           oidc.config: |
             name: keycloak
-            issuer: https://kc.platform.local/realms/developers-realm
+            issuer: https://kc.platform.local/realms/master
             clientID: argocd
             clientSecret: $oidc.keycloak.clientSecret
             requestedScopes: ["openid", "profile", "email"]

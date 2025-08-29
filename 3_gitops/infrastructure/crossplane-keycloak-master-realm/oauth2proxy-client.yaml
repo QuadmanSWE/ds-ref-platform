@@ -12,7 +12,7 @@ spec:
   managementPolicies: ["*"]
   forProvider:
     realmIdRef:
-      name: developers-realm
+      name: master
     accessType: CONFIDENTIAL
     clientId: oauth2proxy
     clientSecretSecretRef:
