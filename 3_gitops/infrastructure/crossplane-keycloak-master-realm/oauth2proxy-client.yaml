@@ -5,15 +5,13 @@ metadata:
   annotations:
     dsoderlund.consulting/rendered-by: yaml
     dsoderlund.consulting/managed-by: crossplane
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   providerConfigRef:
     name: keycloak-config
   deletionPolicy: Orphan
   managementPolicies: ["*"]
   forProvider:
-    realmIdRef:
-      name: master
+    realmId: master
     accessType: CONFIDENTIAL
     clientId: oauth2proxy
     clientSecretSecretRef:

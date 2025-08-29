@@ -3,7 +3,7 @@ kind: XBuiltinObjects
 metadata:
   name: keycloak-builtin-objects-master
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   providerConfigName: keycloak-config
   providerSecretName: keycloak-credentials

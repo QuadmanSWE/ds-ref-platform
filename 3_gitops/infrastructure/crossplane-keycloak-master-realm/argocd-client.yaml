@@ -6,11 +6,9 @@ metadata:
   annotations:
     dsoderlund.consulting/rendered-by: yaml
     dsoderlund.consulting/managed-by: crossplane
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   forProvider:
-    realmIdRef:
-      name: master
+    realmId: master
     name: argocd-admin
   providerConfigRef:
     name: keycloak-config
@@ -22,13 +20,11 @@ metadata:
   annotations:
     dsoderlund.consulting/rendered-by: yaml
     dsoderlund.consulting/managed-by: crossplane
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   providerConfigRef:
     name: keycloak-config 
   forProvider:
-    realmIdRef:
-      name: master
+    realmId: master
     name: groups
     includeInTokenScope: true
     consentScreenText: "Access to group membership"
@@ -41,13 +37,11 @@ metadata:
   annotations:
     dsoderlund.consulting/rendered-by: yaml
     dsoderlund.consulting/managed-by: crossplane
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   providerConfigRef:
     name: keycloak-config 
   forProvider:
-    realmIdRef:
-      name: master
+    realmId: master
     clientScopeIdRef:
       name: groups
     name: groups
@@ -67,15 +61,13 @@ metadata:
   annotations:
     dsoderlund.consulting/rendered-by: yaml
     dsoderlund.consulting/managed-by: crossplane
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   providerConfigRef:
     name: keycloak-config
   deletionPolicy: Orphan
   managementPolicies: ["*"]
   forProvider:
-    realmIdRef: 
-      name: master
+    realmId: master
     accessType: CONFIDENTIAL
     clientId: argocd
     clientSecretSecretRef:
@@ -98,13 +90,11 @@ metadata:
   annotations:
     dsoderlund.consulting/rendered-by: yaml
     dsoderlund.consulting/managed-by: crossplane
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   providerConfigRef:
     name: keycloak-config
   forProvider:
-    realmIdRef:
-      name: master
+    realmId: master
     clientIdRef:
       name: argocd
     defaultScopes:
@@ -112,5 +102,3 @@ spec:
       - profile
       - email
       - groups
-
----
