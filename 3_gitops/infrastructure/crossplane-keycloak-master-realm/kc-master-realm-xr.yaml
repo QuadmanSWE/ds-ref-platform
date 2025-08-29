@@ -8,10 +8,18 @@ spec:
   providerConfigName: keycloak-config
   providerSecretName: keycloak-credentials
   realm: master
-  builtinClients:
+  builtinClients: 
+    - account
+    - account-console
+    - admin-cli
+    - broker
     - master-realm
+    - security-admin-console
   builtinRealmRoles:
+    - offline_access
+    - uma_authorization
     - admin
     - default-roles-master
+    - create-realm
   builtinAuthenticationFlows:
     - browser
