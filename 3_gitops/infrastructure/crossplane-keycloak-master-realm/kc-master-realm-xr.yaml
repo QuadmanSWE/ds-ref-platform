@@ -12,5 +12,6 @@ spec:
     - master-realm
   builtinRealmRoles:
     - admin
+    - default-roles-master
   builtinAuthenticationFlows:
     - browser
