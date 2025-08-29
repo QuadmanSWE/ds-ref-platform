@@ -1,0 +1,14 @@
+apiVersion: user.keycloak.crossplane.io/v1alpha1
+kind: Groups
+metadata:
+  name: developers-admin-groups
+spec:
+  forProvider:
+    realmIdRef: 
+      name: developers-realm
+    userIdRef: 
+      name: developers-admin
+    groupIdsRefs: 
+      - name: "argocd-admin"
+  providerConfigRef:
+    name: keycloak-config

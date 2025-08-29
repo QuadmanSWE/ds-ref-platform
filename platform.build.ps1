@@ -88,6 +88,14 @@ task bootstrap {
   path: /stringData/admin-password
   value: {0}
 "@
+    $kcadminuserpatchpattern = @"
+- op: add
+  path: /spec/forProvider/username
+  value: {0}
+- op: add
+  path: /spec/forProvider/email
+  value: {0}
+"@
     # Pick a username and a default password to use for the platform.
     $email = Read-Host -Prompt "Enter an email for your platform user"
     $password = Read-Host -Prompt "Enter a password for your platform user" -MaskInput
@@ -99,6 +107,7 @@ task bootstrap {
     $kcadminpatchpattern -f $email, $password > 2_platform/keycloak/keycloak-admin-patch.yaml
     $kcauthpatchpattern -f $email, $password  > 2_platform/keycloak-auth-patch.yaml
     $xpadminpatchpattern -f $password > 2_platform\crossplane\crossplane-keycloak-secret-patch.yaml
+    $kcadminuserpatchpattern -f $password > .\3_gitops\admin-user\admin-patch.yaml
 }
 task prereqs {
     $reqs = @(
