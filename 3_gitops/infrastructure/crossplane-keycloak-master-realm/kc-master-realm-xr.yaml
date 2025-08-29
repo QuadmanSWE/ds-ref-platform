@@ -9,7 +9,7 @@ spec:
   providerSecretName: keycloak-credentials
   realm: master
   builtinClients:
-    - realm-management
+    - master-realm
   builtinRealmRoles:
     - admin
   builtinAuthenticationFlows:
