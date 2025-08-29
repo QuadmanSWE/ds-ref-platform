@@ -3,6 +3,10 @@ apiVersion: group.keycloak.crossplane.io/v1alpha1
 kind: Group
 metadata:
   name: argocd-admin
+  annotations:
+    dsoderlund.consulting/rendered-by: yaml
+    dsoderlund.consulting/managed-by: crossplane
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   forProvider:
     realmIdRef:
@@ -18,6 +22,7 @@ metadata:
   annotations:
     dsoderlund.consulting/rendered-by: yaml
     dsoderlund.consulting/managed-by: crossplane
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   providerConfigRef:
     name: keycloak-config 
@@ -36,6 +41,7 @@ metadata:
   annotations:
     dsoderlund.consulting/rendered-by: yaml
     dsoderlund.consulting/managed-by: crossplane
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   providerConfigRef:
     name: keycloak-config 
@@ -61,6 +67,7 @@ metadata:
   annotations:
     dsoderlund.consulting/rendered-by: yaml
     dsoderlund.consulting/managed-by: crossplane
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   providerConfigRef:
     name: keycloak-config
@@ -91,6 +98,7 @@ metadata:
   annotations:
     dsoderlund.consulting/rendered-by: yaml
     dsoderlund.consulting/managed-by: crossplane
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   providerConfigRef:
     name: keycloak-config
