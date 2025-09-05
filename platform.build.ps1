@@ -1,26 +1,33 @@
 param (
-    $dnsname = "platform.local" #todo: this can be changed here but it won't work with any value but the default since its hardcoded everywhere.
+    [string]$username,
+    [string]$password,
+    [string]$email
 )
-
-task 0_cert_up {
-    if(get-item 0_certs/root-ca -ea 0) {
-        throw "Root CA already exists"
-    }
-    else {   
+$dnsname = "platform.local"
+task 0_cert_up cert_create, cert_copy, cert_import
+task cert_create {
+    if(-not (get-item 0_certs/root-ca -ea 0)) {
+        Write-Debug 'creating cert dir'
         # create a git ignored directory to store the root CA certificate and private key
         mkdir 0_certs/root-ca | out-null
+
+        Write-Debug 'creating new certs'
         # create a new private key for the root CA
         openssl genrsa -out ./0_certs/root-ca/root-ca-key.pem 2048 | out-null
         # create a self-signed root CA certificate using the private key
         openssl req -x509 -new -nodes -key ./0_certs/root-ca/root-ca-key.pem -days 3650 -sha256 -out ./0_certs/root-ca/root-ca.pem -subj "/CN=kube-ca" | out-null
-        # Copy the cert over to argocd app so that its kustomize can reference it for oidc
-        mkdir ./2_platform/argocd/secrets
-        cp 0_certs/root-ca/root-ca.pem ./2_platform/argocd/secrets/root-ca.pem
-        # import the root CA certificate into the local machine's trusted root certificate store
-        Import-Certificate -FilePath "./0_certs/root-ca/root-ca.pem" -CertStoreLocation cert:\CurrentUser\Root
-        # Copy the cert over to argocd app so that its kustomize can reference it for oidc
-        cp 0_certs/root-ca/root-ca.pem ./2_platform/argocd/secrets/root-ca.pem
     }
+}
+task cert_copy {
+    if(get-item 0_certs/root-ca -ea 0) {
+        # Copy the cert over to argocd app so that its kustomize can reference it for oidc
+        mkdir ./2_platform/argocd/secrets -Force
+        Copy-Item 0_certs/root-ca/root-ca.pem ./2_platform/argocd/secrets/root-ca.pem
+    }
+}
+task cert_import {
+    # import the root CA certificate into the local machine's trusted root certificate store
+    Import-Certificate -FilePath 0_certs/root-ca/root-ca.pem -CertStoreLocation cert:\CurrentUser\Root
 }
 
 task 1_cluster_up {
@@ -82,13 +89,22 @@ task bootstrap {
       value: {2}
 "@
     # Pick a username and a default password to use for the platform.
-    $username = Read-Host -Prompt "Enter a username for the platform"
-    $password = Read-Host -Prompt "Enter a password for your platform user" -MaskInput
+    if($username -eq ''){
+        $username = Read-Host -Prompt "Enter a username for the platform"
+    } 
+    if($password -eq ''){
+        $password = Read-Host -Prompt "Enter a password for your platform user" -MaskInput
+    }
+    if($email -eq '')  {
+        $email = Read-Host -Prompt "Enter an email for your platform user"
+    }
+
+    Write-Output "Boostrapping user $username"
     $stupidCharacters = '`''"$'
     if($password -match "[$stupidCharacters]") {
         throw "Password cannot contain any of the following characters: $stupidCharacters (because I couldn't get the curl command to escape them :D)"
     }
-    $email = Read-Host -Prompt "Enter an email for your platform user"
+    
     $kcadminpatchpattern -f $username, $password > 2_platform/keycloak/keycloak-admin-patch.yaml
     $kcauthpatchpattern -f $username, $password, $email  > 2_platform/keycloak-auth-patch.yaml
 }
@@ -147,6 +163,7 @@ task changebranch {
 task cb changebranch
 task dns_local local_dns
 task init prereqs, bootstrap, 0_cert_up, local_dns
+task 0 0_cert_up
 task 1 1_cluster_up
 task 2 2_platform_up
 task 3 3_gitops_up
