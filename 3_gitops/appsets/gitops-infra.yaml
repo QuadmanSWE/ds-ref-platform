@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/QuadmanSWE/ds-ref-platform
-        revision: v2-take2
+        revision: main
         directories:
           - path: 3_gitops/infrastructure/*
   template:
@@ -20,7 +20,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/QuadmanSWE/ds-ref-platform
-        targetRevision: v2-take2
+        targetRevision: main
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
