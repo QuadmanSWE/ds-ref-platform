@@ -5,3 +5,30 @@ resources:
   - "./mtls-strict.yaml"
   - "./istio-cm.yaml"
   - "./auth-policy.yaml"
+helmCharts:
+
+  - name: base
+    namespace: istio-system
+    releaseName: istio-base
+    repo: https://istio-release.storage.googleapis.com/charts
+    version: ~1.27.1
+    includeCRDs: true
+    valuesInline:
+      defaultRevision: default
+  - name: istiod
+    namespace: istio-system
+    releaseName: istiod
+    repo: https://istio-release.storage.googleapis.com/charts
+    version: ~1.27.1
+    valuesInline:
+      pilot:
+        configMap: false
+  - name: gateway
+    namespace: istio-system
+    releaseName: istio-gateway
+    repo: https://istio-release.storage.googleapis.com/charts
+    version: ~1.27.1
+    valuesInline:
+      service:
+        # Type of service. Set to "None" to disable the service entirely
+        # type: LoadBalancer

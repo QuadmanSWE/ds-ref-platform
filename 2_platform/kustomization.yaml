@@ -23,34 +23,3 @@ patches:
       kind: Job
       annotationSelector: "patch=keycloakcredentials"
 
-helmCharts:
-- name: base
-  namespace: istio-system
-  releaseName: istio-base
-  repo: https://istio-release.storage.googleapis.com/charts
-  version: ~1.26.2
-  includeCRDs: true
-  valuesInline:
-    defaultRevision: default
-- name: istiod
-  namespace: istio-system
-  releaseName: istiod
-  repo: https://istio-release.storage.googleapis.com/charts
-  version: ~1.26.2
-  valuesInline:
-    pilot:
-      configMap: false
-- name: gateway
-  namespace: istio-system
-  releaseName: istio-gateway
-  repo: https://istio-release.storage.googleapis.com/charts
-  version: ~1.26.2
-  valuesInline:
-    service:
-      # Type of service. Set to "None" to disable the service entirely
-      # type: LoadBalancer
-- name: crossplane
-  namespace: crossplane-system
-  releaseName: crossplane
-  repo: https://charts.crossplane.io/preview
-  version: 2.0.0-preview.1 # todo, look forward to release in august 2025

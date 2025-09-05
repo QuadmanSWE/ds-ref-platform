@@ -11,4 +11,9 @@ generatorOptions:
   disableNameSuffixHash: true
   annotations:
     note: kustomize-generated
-
+helmCharts:
+  - name: crossplane
+    namespace: crossplane-system
+    releaseName: crossplane
+    repo: https://charts.crossplane.io/stable
+    version: 2.0.2

@@ -296,3 +296,7 @@ helmCharts:
             emptyDir: {}
       dex:
         enabled: false
+      redisSecretInit:
+        enabled: true
+        podAnnotations:
+          sidecar.istio.io/inject: "false"

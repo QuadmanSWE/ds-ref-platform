@@ -15,6 +15,9 @@ k8s_yaml('namespaces.yaml')
 # deploy the platform
 k8s_yaml(local('kustomize build . --enable-helm'))
 
+# Deploy CNPG
+k8s_yaml('cnpg-install.yaml')
+
 # label resources and forward traffic to istio
 k8s_resource('istiod', labels="istio")
 k8s_resource('istio-gateway', port_forwards=['443:443', '80:80'], labels="istio")
