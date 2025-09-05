@@ -1,0 +1,38 @@
+apiVersion: keycloak.crossplane.io/v1alpha1
+kind: XBuiltinObjects
+metadata:
+  name: keycloak-builtin-objects-master
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  providerConfigName: keycloak-config
+  providerSecretName: keycloak-credentials
+  realm: master
+  builtinClients: 
+    - account
+    - account-console
+    - admin-cli
+    - broker
+    - realm-management
+    - security-admin-console
+  builtinRealmRoles:
+    - offline_access
+    - uma_authorization
+    - admin
+    - default-roles-master
+    - create-realm
+  builtinAuthenticationFlows:
+    - browser
+---
+apiVersion: realm.keycloak.crossplane.io/v1alpha1
+kind: Realm
+metadata:
+  name: master-realm
+spec:
+  forProvider:
+    realm: master
+    enabled: true
+    adminTheme: "phasetwo.v2"
+  deletionPolicy: Orphan
+  providerConfigRef:
+    name: keycloak-config
