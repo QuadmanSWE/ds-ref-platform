@@ -23,13 +23,6 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: backstage
-  labels:
-    istio-injection: enabled
----
-apiVersion: v1
-kind: Namespace
-metadata:
   name: argocd
   labels:
     istio-injection: enabled

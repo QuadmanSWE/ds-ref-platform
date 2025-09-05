@@ -58,7 +58,7 @@ Lastly it will prompt you to add the dns records to your hostfile in order for y
 
 When `up` runs it will create a 1 worker 1 control-plane cluster using kind on docker desktop according to the spec in `1_cluster/kind/cluster.yaml`.
 
-Then it will run the tiltfile `4_crossplane_\Tiltfile` to get the platform and then the gitops configuration for apps and infrastructure up.
+Then it will run the tiltfile `3_gitops_\Tiltfile` to get the platform and then the gitops configuration for apps and infrastructure up.
 
 ![](./docs/assets/2024-03-23-18-58-03.png)
 

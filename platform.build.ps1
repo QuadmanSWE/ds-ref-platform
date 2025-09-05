@@ -2,7 +2,7 @@ param (
     $dnsname = "platform.local" #todo: this can be changed here but it won't work with any value but the default since its hardcoded everywhere.
 )
 
-task cert_up {
+task 0_cert_up {
     if(get-item 0_certs/root-ca -ea 0) {
         throw "Root CA already exists"
     }
@@ -23,53 +23,36 @@ task cert_up {
     }
 }
 
-task cluster_up {
+task 1_cluster_up {
     ctlptl apply -f 1_cluster/kind/cluster.yaml
 }
-task cluster_down {
+task 1_cluster_down {
     ctlptl delete -f 1_cluster/kind/cluster.yaml
 }
-task platform_up {
+task 2_platform_up {
     push-location 2_platform
     tilt up 
     pop-location
 }
-task platform_down {
+task 2_platform_down {
     push-location 2_platform
     tilt down 
     pop-location
 }
-task backstage_up {
-    
-}
-task backstage_down {
-    
-}
-task apps_up {
+task 3_gitops_up {
     push-location 3_gitops
     tilt up 
     pop-location
 }
-task apps_down {
+task 3_gitops_down {
     push-location 3_gitops
     tilt down 
-    pop-location
-}
-task crossplane_up {
-    push-location 4_crossplane
-    tilt up
-    pop-location
-}
-task crossplane_down {
-    push-location 4_crossplane
-    tilt down
     pop-location
 }
 task local_dns {
     write-host "copy and paste into your host files (need to save as admin)"
     @"
 ############################################
-127.0.0.1 backstage.$dnsname
 127.0.0.1 kc.$dnsname
 127.0.0.1 argocd.$dnsname
 127.0.0.1 pg.$dnsname
@@ -163,6 +146,9 @@ task changebranch {
 }
 task cb changebranch
 task dns_local local_dns
-task init prereqs, bootstrap, cert_up, local_dns
-task up cluster_up, crossplane_up
-task down cluster_down
+task init prereqs, bootstrap, 0_cert_up, local_dns
+task 1 1_cluster_up
+task 2 2_platform_up
+task 3 3_gitops_up
+task up 1_cluster_up, 3_gitops_up
+task down 1_cluster_down
