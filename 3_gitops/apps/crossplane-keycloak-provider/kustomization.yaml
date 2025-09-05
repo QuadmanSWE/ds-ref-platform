@@ -2,8 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: crossplane-system
 resources:
-  - "./provider-keycloak.yaml"
-  - "./provider-config-keycloak.yaml"
+  - provider-keycloak.yaml
+  - provider-config-keycloak.yaml
+  - functions.yaml
+  - BuiltinObjects.composition.yaml
+  - BuiltinObjects.xrd.yaml
 secretGenerator:
   - name: keycloak-credentials
     type: Opaque
@@ -13,3 +16,5 @@ generatorOptions:
   disableNameSuffixHash: true
   annotations:
     note: kustomize-generated
+  labels:
+    type: provider-credentials
