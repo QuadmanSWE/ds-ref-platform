@@ -9,7 +9,7 @@ task cert_create {
     if(-not (get-item 0_certs/root-ca -ea 0)) {
         Write-Debug 'creating cert dir'
         # create a git ignored directory to store the root CA certificate and private key
-        mkdir 0_certs/root-ca | out-null
+        New-Item -ItemType Directory -Path 0_certs/root-ca | out-null
 
         Write-Debug 'creating new certs'
         # create a new private key for the root CA
@@ -21,13 +21,19 @@ task cert_create {
 task cert_copy {
     if(get-item 0_certs/root-ca -ea 0) {
         # Copy the cert over to argocd app so that its kustomize can reference it for oidc
-        mkdir ./2_platform/argocd/secrets -Force
+        New-Item -ItemType Directory -Path 2_platform/argocd/secrets -Force
         Copy-Item 0_certs/root-ca/root-ca.pem ./2_platform/argocd/secrets/root-ca.pem
     }
 }
 task cert_import {
     # import the root CA certificate into the local machine's trusted root certificate store
-    Import-Certificate -FilePath 0_certs/root-ca/root-ca.pem -CertStoreLocation cert:\CurrentUser\Root
+    if($IsWindows) {
+        Import-Certificate -FilePath 0_certs/root-ca/root-ca.pem -CertStoreLocation cert:\CurrentUser\Root
+    }
+    else {
+        sudo trust anchor 0_certs/root-ca/root-ca.pem
+        sudo update-ca-trust
+    }
 }
 
 task 1_cluster_up {
@@ -57,6 +63,9 @@ task 3_gitops_down {
     pop-location
 }
 task local_dns {
+    if($IsWindows)
+    {$hostsfile = "c:\windows\system32\drivers\etc\hosts"}
+    else {$hostsfile = "/etc/hosts"}
     write-host "copy and paste into your host files (need to save as admin)"
     @"
 ############################################
@@ -66,7 +75,7 @@ task local_dns {
 127.0.0.1 echo.$dnsname
 ############################################
 "@ | write-host
-    code c:\windows\system32\drivers\etc\hosts
+    code $hostsfile
 }
 task bootstrap {
     $kcadminpatchpattern = @"
@@ -125,21 +134,26 @@ task prereqs {
         }
         else {
             Write-Host "$req not found. Please install it and try again"
-            $scoopInstalled = Get-Command scoop -ErrorAction SilentlyContinue
-            if(-not $scoopInstalled) {
-                $installScoop = Read-Host -Prompt "Would you like to install scoop? (y/n)"
-                if($installScoop -eq "y") {
-                    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-                    Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
-                    scoop bucket add tilt-dev https://github.com/tilt-dev/scoop-bucket
+            if($IsWindows){
+                $scoopInstalled = Get-Command scoop -ErrorAction SilentlyContinue
+                if(-not $scoopInstalled) {
+                    $installScoop = Read-Host -Prompt "Would you like to install scoop? (y/n)"
+                    if($installScoop -eq "y") {
+                        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+                        Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+                        scoop bucket add tilt-dev https://github.com/tilt-dev/scoop-bucket
+                    }
+                    else {
+                        break;
+                    }
                 }
-                else {
-                    break;
+                $installNowWithScoop = Read-Host -Prompt "Would you like to install $req with scoop now? (y/n)"
+                if($installNowWithScoop -eq "y") {
+                    scoop install $req
                 }
             }
-            $installNowWithScoop = Read-Host -Prompt "Would you like to install $req with scoop now? (y/n)"
-            if($installNowWithScoop -eq "y") {
-                scoop install $req
+            else {
+                # todo: linux users need help here.
             }
         }
     }
