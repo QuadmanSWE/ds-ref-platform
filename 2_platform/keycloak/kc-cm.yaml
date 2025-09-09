@@ -9,9 +9,14 @@ data:
   KC_DB_URL_HOST: "postgres.platform"
   KC_DB_URL_PORT: "5432"
   KC_DB_URL_DATABASE: "keycloak"
+  KC_METRICS_ENABLED: "true"
   KC_HEALTH_ENABLED: "true"
   KC_DB_USERNAME: 'keycloak'
   KC_DB_PASSWORD: 'kcpw_tJLMDHwUqcfgO20TqQcO'
   KC_PROXY: "edge"
   KC_LOG_LEVEL: 'info'
   KC_HOSTNAME: 'https://kc.platform.local'
+  KC_HOSTNAME_STRICT_HTTPS: 'true'
+  KC_PROXY_HEADERS: 'xforwarded'
+  KC_HTTP_ENABLED: 'true'
+  PHASETWO_ANALYTICS_DISABLED: 'true'
