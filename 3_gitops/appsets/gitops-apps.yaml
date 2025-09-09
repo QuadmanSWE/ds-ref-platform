@@ -10,6 +10,8 @@ spec:
         revision: main
         directories:
           - path: 3_gitops/apps/*
+          - path: 3_gitops/apps/cdk8s-demo
+            exclude: true
   template:
     metadata:
       name: "{{path.basename}}"
