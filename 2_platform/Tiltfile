@@ -23,8 +23,8 @@ k8s_resource('istiod', labels="istio")
 k8s_resource('istio-gateway', port_forwards=['443:443', '80:80'], labels="istio")
 
 # postgres
-k8s_resource('pg', port_forwards=5432, labels="postgres")
-k8s_resource('create-keycloak-db', labels="postgres")
+k8s_resource('pg', labels="keycloak")
+k8s_resource('create-keycloak-db', labels="keycloak")
 
 # keycloak 
 k8s_resource('kc', labels="keycloak")
