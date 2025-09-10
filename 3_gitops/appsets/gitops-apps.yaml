@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/QuadmanSWE/ds-ref-platform
-        revision: main
+        revision: v2-improvements
         directories:
           - path: 3_gitops/apps/*
           - path: 3_gitops/apps/cdk8s-demo
@@ -22,7 +22,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/QuadmanSWE/ds-ref-platform
-        targetRevision: main
+        targetRevision: v2-improvements
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
