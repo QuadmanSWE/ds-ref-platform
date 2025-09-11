@@ -5,6 +5,7 @@ resources:
   - "./mtls-strict.yaml"
   - "./istio-cm.yaml"
   - "./auth-policy.yaml"
+  - "./istio-telemetry.yaml"
 helmCharts:
 
   - name: base
@@ -23,6 +24,7 @@ helmCharts:
     valuesInline:
       pilot:
         configMap: false
+      profile: ambient
   - name: gateway
     namespace: istio-system
     releaseName: istio-gateway
@@ -32,3 +34,15 @@ helmCharts:
       service:
         # Type of service. Set to "None" to disable the service entirely
         # type: LoadBalancer
+  - name: cni
+    namespace: istio-system
+    releaseName: istio-cni
+    repo: https://istio-release.storage.googleapis.com/charts
+    version: ~1.27.1
+    valuesInline:
+      profile: ambient
+  - name: ztunnel
+    namespace: istio-system
+    releaseName: ztunnel
+    repo: https://istio-release.storage.googleapis.com/charts
+    version: ~1.27.1

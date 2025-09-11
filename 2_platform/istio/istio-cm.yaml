@@ -9,13 +9,8 @@ metadata:
     operator.istio.io/component: Pilot
 data:
   mesh: |-
-    defaultConfig:
-      discoveryAddress: istiod.istio-system.svc:15012
-      tracing:
-        zipkin:
-          address: zipkin.istio-system:9411
     enablePrometheusMerge: true
-    enableTracing: false
+    enableTracing: true
     outboundTrafficPolicy:
       mode: ALLOW_ANY
     trustDomain: cluster.local
@@ -28,5 +23,11 @@ data:
         includeHeadersInCheck: ["authorization", "cookie", "x-forwarded-email"]
         headersToUpstreamOnAllow: ["x-forwarded-access-token", "x-forwarded-email", "path", "x-auth-request-user", "x-auth-request-email", "x-auth-request-access-token"]
         headersToDownstreamOnDeny: ["content-type", "set-cookie"]
+    - name: otel-tracing
+      opentelemetry:
+        port: 4317
+        service: opentelemetry-collector.observability.svc.cluster.local
+        resource_detectors:
+          environment: {}
   meshNetworks: 'networks: {}'
 
