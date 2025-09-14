@@ -12,11 +12,22 @@ k8s_yaml('clusterissuer.yaml')
 # deploy namespaces
 k8s_yaml('namespaces.yaml')
 
+# deploy prometheus
+k8s_yaml(['prometheus/setup.yaml', 'prometheus/prometheus-operator.yaml'])
+k8s_resource('prometheus-operator', labels='prometheus')
+k8s_resource('prometheus-adapter', labels='prometheus')
+k8s_resource('node-exporter', labels='prometheus')
+k8s_resource('kube-state-metrics', labels='prometheus')
+k8s_resource('blackbox-exporter', labels='prometheus')
+k8s_resource('grafana', labels='prometheus')
+
+
 # deploy the platform
 k8s_yaml(local('kustomize build . --enable-helm'))
 
 # Deploy CNPG
 k8s_yaml('cnpg-install.yaml')
+k8s_resource('cnpg-controller-manager',labels='cnpg')
 
 # label resources and forward traffic to istio
 k8s_resource('istiod', labels="istio")
