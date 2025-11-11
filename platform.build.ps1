@@ -129,7 +129,6 @@ task prereqs {
         "kubectl",
         "kind",
         "tilt",
-        # "ctlptl",
         "openssl",
         "helm",
         "kustomize"

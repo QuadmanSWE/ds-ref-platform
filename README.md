@@ -24,7 +24,6 @@ Invoke-Build up
 
 - kubectl
 - kind
-- ctlptl
 
 ### Part 2, platform
 
