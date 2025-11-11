@@ -1,7 +1,8 @@
 param (
     [string]$username,
     [string]$password,
-    [string]$email
+    [string]$email,
+    [string[]]$additionalHostNames
 )
 $dnsname = "platform.local"
 task 0_cert_up cert_create, cert_copy, cert_import
@@ -37,10 +38,10 @@ task cert_import {
 }
 
 task 1_cluster_up {
-    ctlptl apply -f 1_cluster/kind/cluster.yaml
+    kind create cluster --config 1_cluster/kind/cluster.yaml
 }
 task 1_cluster_down {
-    ctlptl delete -f 1_cluster/kind/cluster.yaml
+    kind delete cluster -n ds-ref-cluster
 }
 task 2_platform_up {
     push-location 2_platform
@@ -67,14 +68,20 @@ task local_dns {
     {$hostsfile = "c:\windows\system32\drivers\etc\hosts"}
     else {$hostsfile = "/etc/hosts"}
     write-host "copy and paste into your host files (need to save as admin)"
+    $hostrecords = 
     @"
 ############################################
 127.0.0.1 kc.$dnsname
 127.0.0.1 argocd.$dnsname
 127.0.0.1 pg.$dnsname
 127.0.0.1 echo.$dnsname
-############################################
-"@ | write-host
+
+"@
+    foreach($h in $additionalHostNames){
+        $hostrecords += '127.0.0.1 ' + $h + "." + $dnsname + "`n"
+    }
+    $hostrecords += "############################################"
+    $hostrecords | Write-Host
     code $hostsfile
 }
 task bootstrap {
@@ -122,7 +129,6 @@ task prereqs {
         "kubectl",
         "kind",
         "tilt",
-        "ctlptl",
         "openssl",
         "helm",
         "kustomize"

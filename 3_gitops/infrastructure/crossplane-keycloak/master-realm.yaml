@@ -13,7 +13,7 @@ spec:
     - account-console
     - admin-cli
     - broker
-    - realm-management
+    - master-realm
     - security-admin-console
   builtinRealmRoles:
     - offline_access

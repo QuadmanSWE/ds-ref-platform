@@ -25,8 +25,8 @@ data:
         service: oauth2-proxy.oauth2-proxy.svc.cluster.local
         port: 80
         timeout: 1.5s
-        includeHeadersInCheck: ["authorization", "cookie"]
-        headersToUpstreamOnAllow: ["x-forwarded-access-token", "authorization", "path", "x-auth-request-user", "x-auth-request-email", "x-auth-request-access-token"]
+        includeHeadersInCheck: ["authorization", "cookie", "x-forwarded-email"]
+        headersToUpstreamOnAllow: ["x-forwarded-access-token", "x-forwarded-email", "path", "x-auth-request-user", "x-auth-request-email", "x-auth-request-access-token"]
         headersToDownstreamOnDeny: ["content-type", "set-cookie"]
   meshNetworks: 'networks: {}'
 
