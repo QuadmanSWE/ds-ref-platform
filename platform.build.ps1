@@ -38,10 +38,10 @@ task cert_import {
 }
 
 task 1_cluster_up {
-    ctlptl apply -f 1_cluster/kind/cluster.yaml
+    kind create cluster --config 1_cluster/kind/cluster.yaml
 }
 task 1_cluster_down {
-    ctlptl delete -f 1_cluster/kind/cluster.yaml
+    kind delete cluster -n ds-ref-cluster
 }
 task 2_platform_up {
     push-location 2_platform
@@ -129,7 +129,7 @@ task prereqs {
         "kubectl",
         "kind",
         "tilt",
-        "ctlptl",
+        # "ctlptl",
         "openssl",
         "helm",
         "kustomize"
