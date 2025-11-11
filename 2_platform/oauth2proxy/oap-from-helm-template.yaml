@@ -436,7 +436,7 @@ spec:
         sysctls: []
       containers:
         - name: oauth2-proxy
-          image: docker.io/bitnami/oauth2-proxy:7.9.0-debian-12-r7
+          image: "quay.io/oauth2-proxy/oauth2-proxy:v7.13.0"
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false
@@ -591,7 +591,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: redis
-          image: docker.io/bitnami/redis:8.0.0-debian-12-r0
+          image: docker.io/redis:8.2.3-bookworm
           imagePullPolicy: "IfNotPresent"
           securityContext:
             allowPrivilegeEscalation: false
